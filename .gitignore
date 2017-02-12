@@ -203,5 +203,4 @@ FakesAssemblies/
 *.ts
 
 # Project specific
-api/ApiClient.ts
-api/ApiClient.js
+src/**/*.lock.json
