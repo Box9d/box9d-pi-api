@@ -4,8 +4,10 @@
   "dependencies": {
     "NETStandard.Library": "1.6.0",
     "xunit": "2.2.0-beta4-build3444",
-    "dotnet-test-xunit": "2.2.0-preview2-build1029"
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Box9.Leds.Pi.Domain": "1.0.0-*"
   },
+  "testRunner": "xunit",
   "frameworks": {
     "netcoreapp1.0": {
       "dependencies": {

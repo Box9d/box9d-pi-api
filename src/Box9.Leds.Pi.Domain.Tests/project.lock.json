@@ -2476,6 +2476,20 @@
         "runtime": {
           "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
         }
+      },
+      "Box9.Leds.Pi.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v1.0",
+        "dependencies": {
+          "Microsoft.NETCore.App": "1.0.0",
+          "NETStandard.Library": "1.6.0"
+        },
+        "compile": {
+          "netcoreapp1.0/Box9.Leds.Pi.Domain.dll": {}
+        },
+        "runtime": {
+          "netcoreapp1.0/Box9.Leds.Pi.Domain.dll": {}
+        }
       }
     }
   },
@@ -7461,10 +7475,16 @@
         "xunit.runner.utility.2.2.0-beta2-build3300.nupkg.sha512",
         "xunit.runner.utility.nuspec"
       ]
+    },
+    "Box9.Leds.Pi.Domain/1.0.0": {
+      "type": "project",
+      "path": "../Box9.Leds.Pi.Domain/project.json",
+      "msbuildProject": "../Box9.Leds.Pi.Domain/Box9.Leds.Pi.Domain.xproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
+      "Box9.Leds.Pi.Domain >= 1.0.0-*",
       "NETStandard.Library >= 1.6.0",
       "dotnet-test-xunit >= 2.2.0-preview2-build1029",
       "xunit >= 2.2.0-beta4-build3444"
