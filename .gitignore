@@ -205,3 +205,4 @@ FakesAssemblies/
 # Project specific
 src/**/*.lock.json
 .vscode/**/*
+src/Box9.Leds.Pi.Api/Properties/PublishProfiles/**/*
