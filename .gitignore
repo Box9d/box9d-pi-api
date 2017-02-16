@@ -204,3 +204,4 @@ FakesAssemblies/
 
 # Project specific
 src/**/*.lock.json
+.vscode/**/*
