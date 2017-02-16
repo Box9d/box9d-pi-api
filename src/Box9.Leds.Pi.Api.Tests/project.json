@@ -4,7 +4,7 @@
   "dependencies": {
     "xunit": "2.1.0",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "Box9.Leds.Pi.Domain": "1.0.0-*"
+    "Box9.Leds.Pi.Api": "1.0.0-*"
   },
   "testRunner": "xunit",
   "frameworks": {
