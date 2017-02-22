@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Box9.Leds.Pi.Api.Autofac;
@@ -10,6 +11,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NJsonSchema;
+using NSwag.AspNetCore;
 
 namespace Box9.Leds.Pi.Api
 {
@@ -66,10 +69,14 @@ namespace Box9.Leds.Pi.Api
 
             app.UseMvc();
 
+            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, new SwaggerUiOwinSettings
+            {
+                DefaultPropertyNameHandling = PropertyNameHandling.CamelCase
+            });
+
             appLifetime.ApplicationStopped.Register(() => 
             {
                 this.ApplicationContainer.Dispose();
-
             });
         }
     }
