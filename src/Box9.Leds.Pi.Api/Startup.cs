@@ -3,6 +3,8 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Box9.Leds.Pi.Api.Autofac;
 using Box9.Leds.Pi.Api.Filters;
+using Box9.Leds.Pi.Core.Config;
+using Box9.Leds.Pi.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -41,8 +43,11 @@ namespace Box9.Leds.Pi.Api
                     new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
             });
 
+            services.ConfigureOptions(Configuration);
+
             var builder = new ContainerBuilder();
             builder.RegisterModule(new ApiAutofacModule());
+            builder.RegisterModule(new DomainAutofacModule());
             builder.Populate(services);
             this.ApplicationContainer = builder.Build();
 
@@ -61,7 +66,11 @@ namespace Box9.Leds.Pi.Api
 
             app.UseMvc();
 
-            appLifetime.ApplicationStopped.Register(() => this.ApplicationContainer.Dispose());
+            appLifetime.ApplicationStopped.Register(() => 
+            {
+                this.ApplicationContainer.Dispose();
+
+            });
         }
     }
 }
