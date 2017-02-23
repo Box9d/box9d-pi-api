@@ -63,7 +63,7 @@ namespace Box9.Leds.Pi.DataAccess
                         {
                             transaction.Rollback();
 
-                            var exception = new Exception(string.Format("Whilst trying to apply script '{0}', order '{1}'", script.Name, script.Id), ex);
+                            var exception = new Exception(string.Format("Whilst trying to apply script '{0}', with Id '{1}'", script.Name, script.Id), ex);
 
                             // This ensures any further calls to the database are met with exception until script is amended
                             Database = () => { throw exception; };

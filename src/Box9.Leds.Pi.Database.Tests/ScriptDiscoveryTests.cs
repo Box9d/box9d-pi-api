@@ -27,5 +27,26 @@ namespace Box9.Leds.Database.Tests
                 }
             }
         }
+
+        [Fact]
+        public void ScriptIds_ShouldStartAt1_AndShouldBeConsecutive()
+        {
+            var scriptDiscovery = new ScriptDiscovery();
+            var result = scriptDiscovery.Discover()
+                .OrderBy(s => s.Id);
+
+            if (result.Any())
+            {
+                var first = result.First();
+                Assert.Equal(1, first.Id);
+            }
+
+            int expectedId = 1;
+            foreach (var script in result)
+            {
+                Assert.Equal(expectedId, script.Id);
+                expectedId++;
+            }
+        }
     }
 }
