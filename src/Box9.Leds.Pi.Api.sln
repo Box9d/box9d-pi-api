@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Box9.Leds.Pi.Api", "Box9.Leds.Pi.Api\Box9.Leds.Pi.Api.xproj", "{74D8AD68-7CA2-4F17-97A9-C642C2430AF1}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Box9.Leds.Pi.Domain.Tests", "Box9.Leds.Pi.Domain.Tests\Box9.Leds.Pi.Domain.Tests.xproj", "{A7392370-3246-49EE-AC5B-B51F9956C573}"
-EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Box9.Leds.Pi.Domain", "Box9.Leds.Pi.Domain\Box9.Leds.Pi.Domain.xproj", "{269F3B19-8CB2-4AFB-A5EB-A11432B9419C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E6C8E10C-38FC-41F0-9152-70C864913932}"
@@ -26,7 +24,9 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Box9.Leds.Pi.DataAccess", "
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Box9.Leds.Pi.Database", "Box9.Leds.Pi.Database\Box9.Leds.Pi.Database.xproj", "{A3863810-E022-4692-8A28-DB0517EEEA22}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Box9.Leds.Database.Tests", "Box9.Leds.Database.Tests\Box9.Leds.Database.Tests.xproj", "{3F8FE87A-9BD6-4F24-8885-9789D5029BEE}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Box9.Leds.Pi.Database.Tests", "Box9.Leds.Pi.Database.Tests\Box9.Leds.Pi.Database.Tests.xproj", "{3F8FE87A-9BD6-4F24-8885-9789D5029BEE}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Box9.Leds.Pi.Domain.Tests", "Box9.Leds.Pi.Domain.Tests\Box9.Leds.Pi.Domain.Tests.xproj", "{A7392370-3246-49EE-AC5B-B51F9956C573}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,10 +38,6 @@ Global
 		{74D8AD68-7CA2-4F17-97A9-C642C2430AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74D8AD68-7CA2-4F17-97A9-C642C2430AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74D8AD68-7CA2-4F17-97A9-C642C2430AF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7392370-3246-49EE-AC5B-B51F9956C573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7392370-3246-49EE-AC5B-B51F9956C573}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7392370-3246-49EE-AC5B-B51F9956C573}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7392370-3246-49EE-AC5B-B51F9956C573}.Release|Any CPU.Build.0 = Release|Any CPU
 		{269F3B19-8CB2-4AFB-A5EB-A11432B9419C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{269F3B19-8CB2-4AFB-A5EB-A11432B9419C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{269F3B19-8CB2-4AFB-A5EB-A11432B9419C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -70,13 +66,17 @@ Global
 		{3F8FE87A-9BD6-4F24-8885-9789D5029BEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F8FE87A-9BD6-4F24-8885-9789D5029BEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F8FE87A-9BD6-4F24-8885-9789D5029BEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7392370-3246-49EE-AC5B-B51F9956C573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7392370-3246-49EE-AC5B-B51F9956C573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7392370-3246-49EE-AC5B-B51F9956C573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7392370-3246-49EE-AC5B-B51F9956C573}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A7392370-3246-49EE-AC5B-B51F9956C573} = {E6C8E10C-38FC-41F0-9152-70C864913932}
 		{B0167667-0B99-491C-9BAA-143846A80DA2} = {E6C8E10C-38FC-41F0-9152-70C864913932}
 		{3F8FE87A-9BD6-4F24-8885-9789D5029BEE} = {E6C8E10C-38FC-41F0-9152-70C864913932}
+		{A7392370-3246-49EE-AC5B-B51F9956C573} = {E6C8E10C-38FC-41F0-9152-70C864913932}
 	EndGlobalSection
 EndGlobal
