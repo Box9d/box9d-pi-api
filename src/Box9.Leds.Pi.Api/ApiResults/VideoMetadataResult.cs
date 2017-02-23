@@ -5,11 +5,20 @@ namespace Box9.Leds.Pi.Api.ApiResults
 {
     public class VideoMetadataResult : IPopulatableFrom<Video>
     {
-        public string FilePath { get; set; }
+        public int Id { get; set; }
+
+        public string FileName { get; set; }
+
+        public double FrameRate { get; set; }
+
+        public int TotalFrames { get; set; }
 
         public void PopulateFrom(Video source)
         {
-            FilePath = source.FilePath;
+            Id = source.Id;
+            FileName = source.FileName;
+            FrameRate = source.FrameRate;
+            TotalFrames = source.TotalFrames;
         }
     }
 }

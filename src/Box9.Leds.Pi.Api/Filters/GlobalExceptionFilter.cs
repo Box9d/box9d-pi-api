@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -8,8 +9,12 @@ namespace Box9.Leds.Pi.Api.Filters
     {
         public override void OnException(ExceptionContext context)
         {
-            context.Result = new JsonResult(GlobalJsonResult<EmptyResult>.Error(context.Exception));
-            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            var statusCode = context.Exception is ArgumentException
+                ? HttpStatusCode.BadRequest
+                : HttpStatusCode.InternalServerError;
+
+            context.HttpContext.Response.StatusCode = (int)statusCode;
+            context.Result = new JsonResult(GlobalJsonResult<EmptyResult>.Error(context.Exception, statusCode));
 
             base.OnException(context);
         }

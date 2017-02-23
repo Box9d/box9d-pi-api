@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using Box9.Leds.Pi.Api.ApiRequests;
 using Box9.Leds.Pi.Api.ApiResults;
+using Box9.Leds.Pi.Api.RequestParsing;
 using Box9.Leds.Pi.Domain.Videos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,17 +35,30 @@ namespace Box9.Leds.Pi.Api.Controllers
         }
 
         [HttpPost("{id}")]
-        public GlobalJsonResult<EmptyResult> Push(int id, [FromBody]VideoMetadataPushRequest request)
+        public GlobalJsonResult<EmptyResult> New(int id, [FromBody]VideoMetadataCreateRequest request)
         {
-            // TODO: Implement
+            var video = videoComponentService.Initialize(id, request);
+            videoComponentService.Save(video);
 
             return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.Created);
+        }
+
+        [HttpPut("{id}")]
+        public GlobalJsonResult<EmptyResult> Put(int id, [FromBody]VideoMetadataPutRequest request)
+        {
+            var video = videoComponentService.GetById(id);
+
+            PutRequest.DoThisIfValueIsNotDefault(request.FileName, v => video.SetFileName(v));
+            PutRequest.DoThisIfValueIsNotDefault(request.FrameRate, v => video.SetFrameRate(v));
+            PutRequest.DoThisIfValueIsNotDefault(request.TotalFrames, v => video.SetTotalFrames(v));
+
+            return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.OK);
         }
 
         [HttpDelete("{id}")]
         public GlobalJsonResult<EmptyResult> Delete(int id)
         {
-            // TODO: Implement
+            videoComponentService.Delete(id);
 
             return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.NoContent);
         }

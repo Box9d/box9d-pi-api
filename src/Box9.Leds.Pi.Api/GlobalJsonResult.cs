@@ -22,9 +22,9 @@ namespace Box9.Leds.Pi.Api
             StatusCode = statusCode;
         }
 
-        public static GlobalJsonResult<EmptyResult> Error(Exception ex)
+        public static GlobalJsonResult<EmptyResult> Error(Exception ex, HttpStatusCode statusCode)
         {
-            return new GlobalJsonResult<EmptyResult>(false, new EmptyResult(), ex.Message, HttpStatusCode.InternalServerError);
+            return new GlobalJsonResult<EmptyResult>(false, new EmptyResult(), ex.Message, statusCode);
         }
 
         public static GlobalJsonResult<EmptyResult>Success(HttpStatusCode statusCode)
