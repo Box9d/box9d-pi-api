@@ -2,7 +2,7 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "xunit": "2.1.0",
+    "xunit": "2.2.0",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "Box9.Leds.Pi.Domain": "1.0.0-*"
   },

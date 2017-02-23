@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Box9.Leds.Pi.DataAccess;
+using Box9.Leds.Pi.Domain.Videos;
 
 namespace Box9.Leds.Pi.Domain
 {
@@ -6,6 +8,9 @@ namespace Box9.Leds.Pi.Domain
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<VideoComponentService>().As<IVideoComponentService>();
+
+            builder.RegisterModule(new DataAccessAutofacModule());
         }
     }
 }

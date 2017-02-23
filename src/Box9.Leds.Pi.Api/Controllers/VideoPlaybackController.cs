@@ -10,7 +10,7 @@ namespace Box9.Leds.Pi.Api.Controllers
     public class VideoPlaybackController : Controller
     {
         [HttpGet]
-        public GlobalJsonResult<LoadVideoPlaybackResult> Load(Guid videoId, [FromBody]LoadVideoPlaybackRequest request)
+        public GlobalJsonResult<LoadVideoPlaybackResult> Load(int videoId, [FromBody]LoadVideoPlaybackRequest request)
         {
             var result = new LoadVideoPlaybackResult();
 
@@ -20,7 +20,7 @@ namespace Box9.Leds.Pi.Api.Controllers
         }
 
         [HttpPost("{playbackToken}")]
-        public GlobalJsonResult<PlayVideoResult> Play(Guid videoId, Guid playbackToken, [FromBody]PlayVideoRequest request)
+        public GlobalJsonResult<PlayVideoResult> Play(int videoId, Guid playbackToken, [FromBody]PlayVideoRequest request)
         {
             var result = new PlayVideoResult();
 
@@ -30,7 +30,7 @@ namespace Box9.Leds.Pi.Api.Controllers
         }
 
         [HttpDelete("{playbackToken}")]
-        public GlobalJsonResult<EmptyResult> Stop(Guid videoId, Guid playbackToken)
+        public GlobalJsonResult<EmptyResult> Stop(int videoId, Guid playbackToken)
         {
             // TODO: Implement
 

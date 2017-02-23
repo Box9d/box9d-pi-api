@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using Box9.Leds.Pi.Api.ApiRequests;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +8,7 @@ namespace Box9.Leds.Pi.Api.Controllers
     public class VideoFramesController : Controller
     {
         [HttpPost]
-        public GlobalJsonResult<EmptyResult> Append(Guid videoId, [FromBody]AppendFramesRequest request)
+        public GlobalJsonResult<EmptyResult> Append(int videoId, [FromBody]AppendFramesRequest request)
         {
             // TODO: Implement
 
@@ -17,7 +16,7 @@ namespace Box9.Leds.Pi.Api.Controllers
         }
         
         [HttpDelete]
-        public GlobalJsonResult<EmptyResult> Clear(Guid videoId)
+        public GlobalJsonResult<EmptyResult> Clear(int videoId)
         {
             // TODO: Implement
 
