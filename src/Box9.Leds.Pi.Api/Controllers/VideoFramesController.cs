@@ -1,5 +1,8 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using Box9.Leds.Pi.Api.ApiRequests;
+using Box9.Leds.Pi.Domain.VideoFrames;
+using Box9.Leds.Pi.Domain.Videos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Box9.Leds.Pi.Api.Controllers
@@ -7,10 +10,23 @@ namespace Box9.Leds.Pi.Api.Controllers
     [Route("api/Video/{videoId}/[controller]")]
     public class VideoFramesController : Controller
     {
+        private readonly IVideoFrameComponentService frameService;
+        private readonly IVideoComponentService videoService;
+
+        public VideoFramesController(IVideoComponentService videoService, IVideoFrameComponentService frameService)
+        {
+            this.videoService = videoService;
+            this.frameService = frameService;
+        }
+
         [HttpPost]
         public GlobalJsonResult<EmptyResult> Append(int videoId, [FromBody]AppendFramesRequest request)
         {
-            // TODO: Implement
+            var video = videoService.GetById(videoId);
+            var frames = request.AppendFrameRequests
+                .Select(req => frameService.Initialize(req.Id, req));
+
+            video.AddFrames(frames);
 
             return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.Created);
         }
@@ -18,7 +34,8 @@ namespace Box9.Leds.Pi.Api.Controllers
         [HttpDelete]
         public GlobalJsonResult<EmptyResult> Clear(int videoId)
         {
-            // TODO: Implement
+            var video = videoService.GetById(videoId);
+            frameService.ClearVideoFrames(video);
 
             return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.NoContent);
         }

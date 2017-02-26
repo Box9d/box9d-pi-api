@@ -1,12 +1,21 @@
-﻿using Box9.Leds.Pi.Core.Validation;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Box9.Leds.Pi.Core.Validation;
 using Box9.Leds.Pi.DataAccess.Models;
 using Box9.Leds.Pi.Domain.Componentization;
 using Box9.Leds.Pi.Domain.Componentization.Initializers;
+using Box9.Leds.Pi.Domain.VideoFrames;
 
 namespace Box9.Leds.Pi.Domain
 {
     public class Video : IInitializable<VideoInitializer>
     {
+        private IEnumerable<VideoFrame> frames;
+        private readonly Func<Video, IEnumerable<VideoFrame>> getVideoFramesAction;
+        private readonly Action<Video, IEnumerable<VideoFrame>> addVideoFramesAction;
+        private readonly Action<Video> clearFramesAction;
+
         internal VideoMetadataModel Model;
 
         public int Id { get { return Model.Id; } }
@@ -15,11 +24,20 @@ namespace Box9.Leds.Pi.Domain
 
         public double FrameRate { get { return Model.FrameRate; } }
 
-        public int TotalFrames { get { return Model.TotalFrames; } }
+        public int TotalFrames { get { return frames.Count(); } }
 
-        internal Video(VideoMetadataModel videoMetadataModel)
+        internal Video(VideoMetadataModel videoMetadataModel, 
+            Func<Video, IEnumerable<VideoFrame>> getVideoFramesAction,
+            Action<Video, IEnumerable<VideoFrame>> addVideoFramesAction,
+            Action<Video> clearFramesAction)
         {
             Model = videoMetadataModel;
+
+            this.getVideoFramesAction = getVideoFramesAction;
+            this.addVideoFramesAction = addVideoFramesAction;
+            this.clearFramesAction = clearFramesAction;
+
+            frames = getVideoFramesAction(this);
         }
 
         public void Initialize(int id, VideoInitializer initializer)
@@ -32,7 +50,6 @@ namespace Box9.Leds.Pi.Domain
 
             SetFileName(initializer.FileName);
             SetFrameRate(initializer.FrameRate);
-            SetTotalFrames(initializer.TotalFrames);
         }
 
         public void SetFileName(string fileName)
@@ -52,13 +69,27 @@ namespace Box9.Leds.Pi.Domain
             Model.FrameRate = frameRate;
         }
 
-        public void SetTotalFrames(int totalFrames)
+        public void AddFrames(IEnumerable<VideoFrame> framesToAdd)
         {
-            Guard.This(totalFrames)
-                .AgainstNegative("Total number of frames cannot be negative")
-                .AgainstZero("Total number of frames cannot be '0'");
+            foreach (var videoFrame in framesToAdd)
+            {
+                foreach (var occupiedPosition in frames.Select(fr => fr.Position))
+                {
+                    if (videoFrame.Position == occupiedPosition)
+                    {
+                        throw new ArgumentException(string.Format("Frame position {0} is already occupied for video", videoFrame.Position));
+                    }
+                }
+            }
 
-            Model.TotalFrames = totalFrames;
+            addVideoFramesAction(this, framesToAdd);
+            frames = getVideoFramesAction(this); // Refresh frames after adding
+        }
+
+        public void ClearFrames()
+        {
+            clearFramesAction(this);
+            getVideoFramesAction(this); // Refresh frames after clearing
         }
     }
 }

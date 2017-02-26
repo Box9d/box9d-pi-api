@@ -6,22 +6,24 @@ using Box9.Leds.Pi.DataAccess;
 using Box9.Leds.Pi.DataAccess.Functions;
 using Box9.Leds.Pi.DataAccess.Models;
 using Box9.Leds.Pi.Domain.Componentization.Initializers;
+using Box9.Leds.Pi.Domain.VideoFrames;
 
 namespace Box9.Leds.Pi.Domain.Videos
 {
     public class VideoComponentService : IVideoComponentService
     {
+        private readonly IVideoFrameComponentService frameComponentService;
         private readonly IDatabaseFactory databaseFactory;
 
-        public VideoComponentService(IDatabaseFactory databaseFactory)
+        public VideoComponentService(IDatabaseFactory databaseFactory, IVideoFrameComponentService frameComponentService)
         {
             this.databaseFactory = databaseFactory;
+            this.frameComponentService = frameComponentService;
         }
 
         public Video Initialize(int id, IMappableTo<VideoInitializer> videoInitializer)
         {
-            var videoModel = new VideoMetadataModel();
-            var video = new Video(videoModel);
+            var video = Video(new VideoMetadataModel());
             video.Initialize(id, videoInitializer.Map());
 
             using (var conn = databaseFactory.Database())
@@ -46,7 +48,7 @@ namespace Box9.Leds.Pi.Domain.Videos
                     throw new ArgumentException(string.Format("Video with Id '{0}' does not exist", id));
                 }
 
-                return new Video(video);
+                return Video(video);
             }
         }
 
@@ -56,7 +58,7 @@ namespace Box9.Leds.Pi.Domain.Videos
             {
                 return conn
                     .GetAllVideoMetadatas()
-                    .Select(vm => new Video(vm));
+                    .Select(vm => Video(vm));
             }
         }
 
@@ -88,6 +90,14 @@ namespace Box9.Leds.Pi.Domain.Videos
 
                 conn.DeleteVideoMetadata(video);
             }
+        }
+
+        private Video Video(VideoMetadataModel model)
+        {
+            return new Video(model,
+                vid => frameComponentService.GetAllForVideo(vid),
+                (vid, frames) => frameComponentService.AddToVideo(frames, vid),
+                vid => frameComponentService.ClearVideoFrames(vid));
         }
     }
 }

@@ -9,15 +9,12 @@ namespace Box9.Leds.Pi.Api.ApiRequests
 
         public double FrameRate { get; set; }
 
-        public int TotalFrames { get; set; }
-
         public VideoInitializer Map()
         {
             return new VideoInitializer
             {
                 FileName = FileName,
                 FrameRate = FrameRate,
-                TotalFrames = TotalFrames
             };
         }
     }

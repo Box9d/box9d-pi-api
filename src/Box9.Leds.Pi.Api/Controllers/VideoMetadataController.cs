@@ -50,7 +50,6 @@ namespace Box9.Leds.Pi.Api.Controllers
 
             PutRequest.DoThisIfValueIsNotDefault(request.FileName, v => video.SetFileName(v));
             PutRequest.DoThisIfValueIsNotDefault(request.FrameRate, v => video.SetFrameRate(v));
-            PutRequest.DoThisIfValueIsNotDefault(request.TotalFrames, v => video.SetTotalFrames(v));
 
             return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.OK);
         }

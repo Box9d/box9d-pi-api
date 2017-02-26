@@ -2,5 +2,6 @@
 {
     public class AppendFramesRequest
     {
+        public AppendFrameRequest[] AppendFrameRequests { get; set; }
     }
 }
