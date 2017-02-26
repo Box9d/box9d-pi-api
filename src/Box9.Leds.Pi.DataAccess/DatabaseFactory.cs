@@ -49,7 +49,8 @@ namespace Box9.Leds.Pi.DataAccess
                 var executedScriptIds = conn.Query<ExecutedScript>("SELECT * FROM Versions").Select(scr => scr.Id);
 
                 foreach (var script in scriptDiscovery.Discover()
-                    .Where(scr => !executedScriptIds.Contains(scr.Id)))
+                    .Where(scr => !executedScriptIds.Contains(scr.Id))
+                    .OrderBy(scr => scr.Id))
                 {
                     using (var transaction = conn.BeginTransaction())
                     {
