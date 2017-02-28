@@ -28,6 +28,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Box9.Leds.Pi.Database.Tests
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Box9.Leds.Pi.Domain.Tests", "Box9.Leds.Pi.Domain.Tests\Box9.Leds.Pi.Domain.Tests.xproj", "{A7392370-3246-49EE-AC5B-B51F9956C573}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Box9.Leds.Pi.Core.Tests", "Box9.Leds.Pi.Core.Tests\Box9.Leds.Pi.Core.Tests.xproj", "{310EE970-D900-4FF9-B544-ACF06C5D7B2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{A7392370-3246-49EE-AC5B-B51F9956C573}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7392370-3246-49EE-AC5B-B51F9956C573}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7392370-3246-49EE-AC5B-B51F9956C573}.Release|Any CPU.Build.0 = Release|Any CPU
+		{310EE970-D900-4FF9-B544-ACF06C5D7B2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{310EE970-D900-4FF9-B544-ACF06C5D7B2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{310EE970-D900-4FF9-B544-ACF06C5D7B2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{310EE970-D900-4FF9-B544-ACF06C5D7B2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,5 +84,6 @@ Global
 		{B0167667-0B99-491C-9BAA-143846A80DA2} = {E6C8E10C-38FC-41F0-9152-70C864913932}
 		{3F8FE87A-9BD6-4F24-8885-9789D5029BEE} = {E6C8E10C-38FC-41F0-9152-70C864913932}
 		{A7392370-3246-49EE-AC5B-B51F9956C573} = {E6C8E10C-38FC-41F0-9152-70C864913932}
+		{310EE970-D900-4FF9-B544-ACF06C5D7B2A} = {E6C8E10C-38FC-41F0-9152-70C864913932}
 	EndGlobalSection
 EndGlobal

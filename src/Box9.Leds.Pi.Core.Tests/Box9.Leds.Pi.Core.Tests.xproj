@@ -6,8 +6,8 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>a7392370-3246-49ee-ac5b-b51f9956c573</ProjectGuid>
-    <RootNamespace>Box9.Leds.Pi.Domain.Tests</RootNamespace>
+    <ProjectGuid>310ee970-d900-4ff9-b544-acf06c5d7b2a</ProjectGuid>
+    <RootNamespace>Box9.Leds.Pi.Core.Tests</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>

@@ -4,6 +4,8 @@
   "dependencies": {
     "Autofac": "4.3.0",
     "Box9.Leds.Pi.DataAccess": "1.0.0-*",
+    "FakeItEasy": "3.0.0",
+    "system.net.websockets.client": "4.3.0",
     "NETStandard.Library": "1.6.1"
   },
 

@@ -35,7 +35,7 @@ namespace Box9.Leds.Pi.Api.Controllers
         public GlobalJsonResult<EmptyResult> Clear(int videoId)
         {
             var video = videoService.GetById(videoId);
-            frameService.ClearVideoFrames(video);
+            video.ClearFrames();
 
             return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.NoContent);
         }

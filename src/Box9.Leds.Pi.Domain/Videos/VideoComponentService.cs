@@ -6,19 +6,19 @@ using Box9.Leds.Pi.DataAccess;
 using Box9.Leds.Pi.DataAccess.Functions;
 using Box9.Leds.Pi.DataAccess.Models;
 using Box9.Leds.Pi.Domain.Componentization.Initializers;
-using Box9.Leds.Pi.Domain.VideoFrames;
+using Box9.Leds.Pi.Domain.Dispatch;
 
 namespace Box9.Leds.Pi.Domain.Videos
 {
     public class VideoComponentService : IVideoComponentService
     {
-        private readonly IVideoFrameComponentService frameComponentService;
+        private readonly IDispatcher dispatcher;
         private readonly IDatabaseFactory databaseFactory;
 
-        public VideoComponentService(IDatabaseFactory databaseFactory, IVideoFrameComponentService frameComponentService)
+        public VideoComponentService(IDatabaseFactory databaseFactory, IDispatcher dispatcher)
         {
             this.databaseFactory = databaseFactory;
-            this.frameComponentService = frameComponentService;
+            this.dispatcher = dispatcher;
         }
 
         public Video Initialize(int id, IMappableTo<VideoInitializer> videoInitializer)
@@ -94,10 +94,7 @@ namespace Box9.Leds.Pi.Domain.Videos
 
         private Video Video(VideoMetadataModel model)
         {
-            return new Video(model,
-                vid => frameComponentService.GetAllForVideo(vid),
-                (vid, frames) => frameComponentService.AddToVideo(frames, vid),
-                vid => frameComponentService.ClearVideoFrames(vid));
+            return new Video(model, dispatcher);
         }
     }
 }

@@ -5,17 +5,17 @@ using Box9.Leds.Pi.Core.Validation;
 using Box9.Leds.Pi.DataAccess.Models;
 using Box9.Leds.Pi.Domain.Componentization;
 using Box9.Leds.Pi.Domain.Componentization.Initializers;
+using Box9.Leds.Pi.Domain.Dispatch;
 using Box9.Leds.Pi.Domain.VideoFrames;
+using Box9.Leds.Pi.Domain.Videos;
 
 namespace Box9.Leds.Pi.Domain
 {
     public class Video : IInitializable<VideoInitializer>
     {
         private IEnumerable<VideoFrame> frames;
-        private readonly Func<Video, IEnumerable<VideoFrame>> getVideoFramesAction;
-        private readonly Action<Video, IEnumerable<VideoFrame>> addVideoFramesAction;
-        private readonly Action<Video> clearFramesAction;
 
+        private readonly IDispatcher dispatcher;
         internal VideoMetadataModel Model;
 
         public int Id { get { return Model.Id; } }
@@ -26,18 +26,13 @@ namespace Box9.Leds.Pi.Domain
 
         public int TotalFrames { get { return frames.Count(); } }
 
-        internal Video(VideoMetadataModel videoMetadataModel, 
-            Func<Video, IEnumerable<VideoFrame>> getVideoFramesAction,
-            Action<Video, IEnumerable<VideoFrame>> addVideoFramesAction,
-            Action<Video> clearFramesAction)
+        internal Video(VideoMetadataModel videoMetadataModel, IDispatcher dispatcher)
         {
             Model = videoMetadataModel;
 
-            this.getVideoFramesAction = getVideoFramesAction;
-            this.addVideoFramesAction = addVideoFramesAction;
-            this.clearFramesAction = clearFramesAction;
+            this.dispatcher = dispatcher;
 
-            frames = getVideoFramesAction(this);
+            frames = dispatcher.Dispatch(this.DispatchGetFramesForVideo());
         }
 
         public void Initialize(int id, VideoInitializer initializer)
@@ -82,14 +77,14 @@ namespace Box9.Leds.Pi.Domain
                 }
             }
 
-            addVideoFramesAction(this, framesToAdd);
-            frames = getVideoFramesAction(this); // Refresh frames after adding
+            dispatcher.Dispatch(this.DispatchAddFrames(framesToAdd));
+            frames = dispatcher.Dispatch(this.DispatchGetFramesForVideo()); // Refresh frames after adding
         }
 
         public void ClearFrames()
         {
-            clearFramesAction(this);
-            getVideoFramesAction(this); // Refresh frames after clearing
+            dispatcher.Dispatch(this.DispatchClearFrames());
+            frames = dispatcher.Dispatch(this.DispatchGetFramesForVideo()); // Refresh frames after clearing
         }
     }
 }

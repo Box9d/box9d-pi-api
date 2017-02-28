@@ -3,6 +3,7 @@
 
   "dependencies": {
     "xunit": "2.2.0",
+    "System.Linq": "4.3.0",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "Box9.Leds.Pi.Domain": "1.0.0-*"
   },
