@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box9.Leds.Pi.DataAccess", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box9.Leds.Pi.Domain", "Box9.Leds.Pi.Domain\Box9.Leds.Pi.Domain.csproj", "{F8FBB19A-5FE4-4C66-A0BA-FBDFDAF6032F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box9.Leds.Pi.WebHost", "Box9.Leds.Manager.WebHost\Box9.Leds.Pi.WebHost.csproj", "{18D73078-F77B-48A5-8A70-4F3517FFF864}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box9.Leds.Pi.Api.Tests", "Box9.Leds.Pi.Api.Tests\Box9.Leds.Pi.Api.Tests.csproj", "{6BA86AA1-7407-4773-AB6B-FD084623DA5B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box9.Leds.Pi.Core.Tests", "Box9.Leds.Pi.Core.Tests\Box9.Leds.Pi.Core.Tests.csproj", "{18BF8BF3-2F79-4C9C-9DAD-D8D889F97AC3}"
@@ -24,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box9.Leds.Pi.Database.Tests", "Box9.Leds.Pi.Database.Tests\Box9.Leds.Pi.Database.Tests.csproj", "{6A29D3B3-53B6-4726-95A7-8422D5DDC494}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box9.Leds.Pi.Domain.Tests", "Box9.Leds.Pi.Domain.Tests\Box9.Leds.Pi.Domain.Tests.csproj", "{BD6A41E0-9BBE-4BBD-8CE1-4AAC494999B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box9.Leds.Pi.WebHost", "Box9.Leds.Pi.WebHost\Box9.Leds.Pi.WebHost.csproj", "{18D73078-F77B-48A5-8A70-4F3517FFF864}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,10 +51,6 @@ Global
 		{F8FBB19A-5FE4-4C66-A0BA-FBDFDAF6032F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8FBB19A-5FE4-4C66-A0BA-FBDFDAF6032F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8FBB19A-5FE4-4C66-A0BA-FBDFDAF6032F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18D73078-F77B-48A5-8A70-4F3517FFF864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18D73078-F77B-48A5-8A70-4F3517FFF864}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18D73078-F77B-48A5-8A70-4F3517FFF864}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18D73078-F77B-48A5-8A70-4F3517FFF864}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6BA86AA1-7407-4773-AB6B-FD084623DA5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6BA86AA1-7407-4773-AB6B-FD084623DA5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BA86AA1-7407-4773-AB6B-FD084623DA5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -71,6 +67,10 @@ Global
 		{BD6A41E0-9BBE-4BBD-8CE1-4AAC494999B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD6A41E0-9BBE-4BBD-8CE1-4AAC494999B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD6A41E0-9BBE-4BBD-8CE1-4AAC494999B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18D73078-F77B-48A5-8A70-4F3517FFF864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18D73078-F77B-48A5-8A70-4F3517FFF864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18D73078-F77B-48A5-8A70-4F3517FFF864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18D73078-F77B-48A5-8A70-4F3517FFF864}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
