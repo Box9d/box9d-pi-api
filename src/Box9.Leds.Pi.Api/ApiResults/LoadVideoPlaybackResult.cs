@@ -1,6 +1,5 @@
-﻿using System;
-using Box9.Leds.Pi.Core.Mapping;
-using Box9.Leds.Pi.Domain.VideoPlayback;
+﻿using Box9.Leds.Pi.Domain.VideoPlayback;
+using SimpleMapping;
 
 namespace Box9.Leds.Pi.Api.ApiResults
 {
@@ -8,7 +7,7 @@ namespace Box9.Leds.Pi.Api.ApiResults
     {
         public string PlaybackToken { get; set; }
 
-        public void PopulateFrom(VideoPlaybackToken source)
+        public void Populate(VideoPlaybackToken source)
         {
             PlaybackToken = source.Token;
         }

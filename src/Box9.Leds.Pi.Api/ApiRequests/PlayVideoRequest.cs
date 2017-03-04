@@ -2,5 +2,6 @@
 {
     public class PlayVideoRequest
     {
+        public string PlaybackToken { get; set; }
     }
 }

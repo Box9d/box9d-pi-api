@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Threading;
 using Box9.Leds.Pi.Core.Config;
-using Microsoft.Extensions.Options;
 
 namespace Box9.Leds.Pi.Domain.VideoPlayback
 {

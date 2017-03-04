@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using Box9.Leds.Pi.Database;
 using Dapper;
-using Microsoft.Data.Sqlite;
+using System.Data.SQLite;
 
 namespace Box9.Leds.Pi.DataAccess
 {
@@ -31,7 +31,7 @@ namespace Box9.Leds.Pi.DataAccess
             dbFilePath = Path.Combine(Directory.GetCurrentDirectory(), "box9database.sqlite");
             database = () =>
             {
-                var conn = new SqliteConnection(string.Format("Data Source={0};", dbFilePath));
+                var conn = new SQLiteConnection(string.Format("Data Source={0};", dbFilePath));
                 conn.Open();
                 return conn;
             };

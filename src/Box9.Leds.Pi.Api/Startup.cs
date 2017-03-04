@@ -1,83 +1,55 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Web.Http;
+using System.Web.Http.Cors;
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
+using Autofac.Integration.WebApi;
+using Box9.Leds.Pi.Api;
 using Box9.Leds.Pi.Api.Autofac;
 using Box9.Leds.Pi.Api.Filters;
-using Box9.Leds.Pi.Core.Config;
-using Box9.Leds.Pi.Domain;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using NJsonSchema;
-using NSwag.AspNetCore;
+using Microsoft.Owin;
+using NSwag.AspNet.Owin;
+using Owin;
 
+[assembly: OwinStartup(typeof(Startup))]
 namespace Box9.Leds.Pi.Api
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configuration(IAppBuilder app)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
-        }
+            var config = new HttpConfiguration();
+            config.Routes.MapHttpRoute(name: "ControllerOnly", routeTemplate: "api/{controller}");
+            config.Routes.MapHttpRoute(name: "ControllerAndAction", routeTemplate: "api/{controller}/{action}");
+            config.Routes.MapHttpRoute(name: "ControllerActionAndId", routeTemplate: "api/{controller}/{action}/{id}");
+            config.Routes.MapHttpRoute(name: "VideoIdControllerAndAction", routeTemplate: "api/Video/{videoId}/{controller}/{action}");
+            config.Filters.Add(new GlobalExceptionFilter());
+            config.Filters.Add(new GlobalActionFilter());
 
-        public IConfigurationRoot Configuration { get; }
-
-        public IContainer ApplicationContainer { get; private set; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
-        {
-            // Add framework services.
-            services.AddMvc(options => {
-                options.Filters.Add(typeof(GlobalExceptionFilter), 1);
-                options.Filters.Add(typeof(GlobalActionFilter), 2);
-            })
-            .AddJsonOptions(options =>
-            {
-                options.SerializerSettings.ContractResolver =
-                    new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
-            });
-
-            services.ConfigureOptions(Configuration);
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
             var builder = new ContainerBuilder();
-            builder.RegisterModule(new ApiAutofacModule());
-            builder.RegisterModule(new DomainAutofacModule());
-            builder.Populate(services);
-            this.ApplicationContainer = builder.Build();
+            builder.RegisterApiControllers(typeof(Startup).Assembly);
+            builder.RegisterWebApiFilterProvider(config);
+            builder.RegisterWebApiModelBinderProvider();
+            builder.RegisterModule<ApiModule>();
 
-            // Create the IServiceProvider based on the container.
-            return new AutofacServiceProvider(this.ApplicationContainer);
-        }
+            var container = builder.Build();
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(
-            IApplicationBuilder app,
-            ILoggerFactory loggerFactory,
-            IApplicationLifetime appLifetime)
-        {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
-            app.UseMvc();
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
             app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, new SwaggerUiOwinSettings
             {
-                DefaultPropertyNameHandling = PropertyNameHandling.CamelCase
+                DefaultUrlTemplate = "api/{controller}/{action}",
+                IsAspNetCore = false
             });
 
-            appLifetime.ApplicationStopped.Register(() => 
-            {
-                this.ApplicationContainer.Dispose();
-            });
+            app.UseAutofacMiddleware(container);
+            app.UseAutofacWebApi(config);
+            app.UseWebApi(config);
+
+            config.MapHttpAttributeRoutes();
+            config.EnsureInitialized();
         }
     }
 }

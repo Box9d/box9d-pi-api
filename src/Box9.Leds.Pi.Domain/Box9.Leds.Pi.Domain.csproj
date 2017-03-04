@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F8FBB19A-5FE4-4C66-A0BA-FBDFDAF6032F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Box9.Leds.Pi.Domain</RootNamespace>
+    <AssemblyName>Box9.Leds.Pi.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.4.0\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleMapping, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleMapping.1.0.8\lib\net461\SimpleMapping.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+	<Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DomainAutofacModule.cs" />
+    <Compile Include="Componentization\IInitializable.cs" />
+    <Compile Include="Componentization\IInitializerComponentService.cs" />
+    <Compile Include="Componentization\Initializers\VideoFrameInitializer.cs" />
+    <Compile Include="Componentization\Initializers\VideoInitializer.cs" />
+    <Compile Include="Dispatch\Dispatcher.cs" />
+    <Compile Include="Dispatch\IDispatcher.cs" />
+    <Compile Include="VideoFrames\IVideoFrameComponentService.cs" />
+    <Compile Include="VideoFrames\VideoFrame.cs" />
+    <Compile Include="VideoFrames\VideoFrameComponentService.cs" />
+    <Compile Include="VideoPlayback\DummyPlaybackService.cs" />
+    <Compile Include="VideoPlayback\FadecandyPlaybackService.cs" />
+    <Compile Include="VideoPlayback\IPlaybackService.cs" />
+    <Compile Include="VideoPlayback\IPlaybackServiceFactory.cs" />
+    <Compile Include="VideoPlayback\IVideoPlayer.cs" />
+    <Compile Include="VideoPlayback\IVideoPlayerMonitor.cs" />
+    <Compile Include="VideoPlayback\VideoPlaybackToken.cs" />
+    <Compile Include="VideoPlayback\VideoPlayer.cs" />
+    <Compile Include="VideoPlayback\VideoPlayerMonitor.cs" />
+    <Compile Include="VideoPlayback\PlaybackServiceFactory.cs" />
+    <Compile Include="Videos\IVideoComponentService.cs" />
+    <Compile Include="Videos\Video.cs" />
+    <Compile Include="Videos\VideoActions.cs" />
+    <Compile Include="Videos\VideoComponentService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Box9.Leds.Pi.Core\Box9.Leds.Pi.Core.csproj">
+      <Project>{cd4d617c-ab15-4efd-96f2-3613b19d82b7}</Project>
+      <Name>Box9.Leds.Pi.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Box9.Leds.Pi.DataAccess\Box9.Leds.Pi.DataAccess.csproj">
+      <Project>{76f5fcd8-279c-4444-acf3-9d2000f2a7c5}</Project>
+      <Name>Box9.Leds.Pi.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,16 +1,13 @@
-﻿using System;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Net;
+using System.Web.Http;
 using Box9.Leds.Pi.Api.ApiRequests;
 using Box9.Leds.Pi.Api.ApiResults;
 using Box9.Leds.Pi.Domain.VideoPlayback;
 using Box9.Leds.Pi.Domain.Videos;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Box9.Leds.Pi.Api.Controllers
 {
-    [Route("api/Video/{videoId}/[controller]")]
-    public class VideoPlaybackController : Controller
+    public class VideoPlaybackController : ApiController
     {
         private readonly IVideoPlayer videoPlayer;
         private readonly IVideoComponentService videoComponentService;
@@ -21,6 +18,8 @@ namespace Box9.Leds.Pi.Api.Controllers
             this.videoPlayer = videoPlayer;
         }
 
+        [ActionName("Load")]
+        
         [HttpGet]
         public GlobalJsonResult<LoadVideoPlaybackResult> Load(int videoId, [FromBody]LoadVideoPlaybackRequest request)
         {
@@ -28,24 +27,26 @@ namespace Box9.Leds.Pi.Api.Controllers
             var videoPlaybackToken = videoPlayer.Load(video);
 
             var result = new LoadVideoPlaybackResult();
-            result.PopulateFrom(videoPlaybackToken);
+            result.Populate(videoPlaybackToken);
 
             return GlobalJsonResult<LoadVideoPlaybackResult>.Success(HttpStatusCode.OK, result);
         }
 
-        [HttpPost("{playbackToken}")]
-        public GlobalJsonResult<EmptyResult> Play(int videoId, string playbackToken, [FromBody]PlayVideoRequest request)
+        [ActionName("Play")]
+        [HttpPost]
+        public GlobalJsonResult<EmptyResult> Play(int videoId, [FromBody]PlayVideoRequest request)
         {
             var video = videoComponentService.GetById(videoId);
-            videoPlayer.PlayAsync(video, playbackToken);
+            videoPlayer.PlayAsync(video, request.PlaybackToken);
 
             return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.OK);
         }
 
-        [HttpDelete("{playbackToken}")]
-        public GlobalJsonResult<EmptyResult> Stop(int videoId, string playbackToken)
+        [ActionName("Stop")]
+        [HttpDelete]
+        public GlobalJsonResult<EmptyResult> Stop(int videoId, [FromBody]StopVideoRequest request)
         {
-            videoPlayer.Stop(playbackToken);
+            videoPlayer.Stop(request.PlaybackToken);
 
             return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.NoContent);
         }

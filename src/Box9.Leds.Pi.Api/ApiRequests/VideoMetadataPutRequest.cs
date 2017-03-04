@@ -2,6 +2,8 @@
 {
     public class VideoMetadataPutRequest
     {
+        public int Id { get; set; }
+
         public string FileName { get; set; }
 
         public double FrameRate { get; set; }

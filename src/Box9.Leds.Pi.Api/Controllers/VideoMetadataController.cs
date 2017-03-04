@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Web.Http;
 using Box9.Leds.Pi.Api.ApiRequests;
 using Box9.Leds.Pi.Api.ApiResults;
 using Box9.Leds.Pi.Api.RequestParsing;
 using Box9.Leds.Pi.Domain.Videos;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Box9.Leds.Pi.Api.Controllers
 {
-    [Route("api/[controller]")]
-    public class VideoMetadataController : Controller
+    public class VideoMetadataController : ApiController
     {
         private readonly IVideoComponentService videoComponentService;
 
@@ -19,6 +18,7 @@ namespace Box9.Leds.Pi.Api.Controllers
             this.videoComponentService = videoComponentService;
         }
 
+        [ActionName("GetVideos")]
         [HttpGet]
         public GlobalJsonResult<IEnumerable<VideoMetadataResult>> GetAll()
         {
@@ -27,26 +27,28 @@ namespace Box9.Leds.Pi.Api.Controllers
                 .Select(v =>
                 {
                     var result = new VideoMetadataResult();
-                    result.PopulateFrom(v);
+                    result.Populate(v);
                     return result;
                 });
 
             return GlobalJsonResult<IEnumerable<VideoMetadataResult>>.Success(HttpStatusCode.OK, results);
         }
 
-        [HttpPost("{id}")]
-        public GlobalJsonResult<EmptyResult> New(int id, [FromBody]VideoMetadataCreateRequest request)
+        [ActionName("NewVideo")]
+        [HttpPost]
+        public GlobalJsonResult<EmptyResult> New([FromBody]VideoMetadataCreateRequest request)
         {
-            var video = videoComponentService.Initialize(id, request);
+            var video = videoComponentService.Initialize(request.Id, request);
             videoComponentService.Save(video);
 
             return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.Created);
         }
 
-        [HttpPut("{id}")]
-        public GlobalJsonResult<EmptyResult> Put(int id, [FromBody]VideoMetadataPutRequest request)
+        [ActionName("UpdateVideo")]
+        [HttpPut]
+        public GlobalJsonResult<EmptyResult> Put([FromBody]VideoMetadataPutRequest request)
         {
-            var video = videoComponentService.GetById(id);
+            var video = videoComponentService.GetById(request.Id);
 
             PutRequest.DoThisIfValueIsNotDefault(request.FileName, v => video.SetFileName(v));
             PutRequest.DoThisIfValueIsNotDefault(request.FrameRate, v => video.SetFrameRate(v));
@@ -54,7 +56,8 @@ namespace Box9.Leds.Pi.Api.Controllers
             return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.OK);
         }
 
-        [HttpDelete("{id}")]
+        [ActionName("DeleteVideo")]
+        [HttpDelete]
         public GlobalJsonResult<EmptyResult> Delete(int id)
         {
             videoComponentService.Delete(id);

@@ -4,8 +4,6 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
 {
     public class VideoPlayerMonitor : IVideoPlayerMonitor
     {
-        private int frameRate;
-
         private Timer timer;
         private int framesReceivedSinceLastTick;
 

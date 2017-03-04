@@ -1,5 +1,5 @@
-﻿using Box9.Leds.Pi.Core.Mapping;
-using Box9.Leds.Pi.Domain.Componentization.Initializers;
+﻿using Box9.Leds.Pi.Domain.Componentization.Initializers;
+using SimpleMapping;
 
 namespace Box9.Leds.Pi.Api.ApiRequests
 {

@@ -1,5 +1,5 @@
-﻿using Box9.Leds.Pi.Core.Mapping;
-using Box9.Leds.Pi.Domain;
+﻿using Box9.Leds.Pi.Domain;
+using SimpleMapping;
 
 namespace Box9.Leds.Pi.Api.ApiResults
 {
@@ -13,7 +13,7 @@ namespace Box9.Leds.Pi.Api.ApiResults
 
         public int TotalFrames { get; set; }
 
-        public void PopulateFrom(Video source)
+        public void Populate(Video source)
         {
             Id = source.Id;
             FileName = source.FileName;
