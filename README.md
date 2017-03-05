@@ -4,7 +4,7 @@ Box9D LED Pi API sits on raspbian on the raspberry Pi and should be used in conj
 
 ### How do I get set up? ###
 
-- Create a folder on the Pi under ~/dotnetboot and copy the files from the scripts folder in this repository (getlatest.sh and start.sh)
+- Create a folder on the Pi ~/dotnetboot and copy the files from the scripts folder in this repository (getlatest.sh and start.sh)
 - Ensure execute permissions are given to both script files (chmod +x)
 - Add the following lines to the /etc/rc.local file (using nano or equivalent) before the exit 0 command:
   /home/pi/dotnetboot/getlatest.sh
