@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Threading;
 using Box9.Leds.Pi.Api;
 using Microsoft.Owin.Hosting;
 
@@ -12,7 +13,7 @@ namespace Box9.Leds.Pi.WebHost
             string baseUrl = ConfigurationManager.AppSettings["Host"];
             var app = WebApp.Start<Startup>(baseUrl);
 
-            Console.ReadLine();
+            Thread.Sleep(int.MaxValue); // Stop app from executing
         }
     }
 }
