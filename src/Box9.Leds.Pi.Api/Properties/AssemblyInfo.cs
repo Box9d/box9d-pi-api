@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Box9.Leds.Manager.Api")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("API for the Box9D Raspberry Pi")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Box9 Drumline")]
 [assembly: AssemblyProduct("Box9.Leds.Manager.Api")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
