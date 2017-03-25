@@ -4,6 +4,9 @@
     <meta charset="utf-8" />
     <title>Visualizer</title>
     <link rel="stylesheet" type="text/css" href="css/visualizer.css">
+    <script src="Scripts/jquery-1.6.4.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.2.1.min.js"></script>
+    <script src="signalr/hubs"></script>
 </head>
 <body>
     <div>
@@ -12,5 +15,13 @@
     </div>
     <div id="display">
     </div>
+    <script type="text/javascript">
+        $(function () {
+            var playback = $.connection.signalRPlaybackService;
+            playback.client.broadcastMessage = function (name, message) {
+                // todo: Display received messages on the page
+            };
+        });
+    </script>
 </body>
 </html>

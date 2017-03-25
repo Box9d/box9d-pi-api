@@ -9,6 +9,7 @@ using Box9.Leds.Pi.Api.Filters;
 using Microsoft.Owin;
 using NSwag.AspNet.Owin;
 using Owin;
+using Microsoft.AspNet.SignalR;
 
 [assembly: OwinStartup(typeof(Startup))]
 namespace Box9.Leds.Pi.Api
@@ -45,6 +46,8 @@ namespace Box9.Leds.Pi.Api
             });
 
             app.UseCustomFileServer();
+
+            app.MapSignalR();
 
             app.UseAutofacMiddleware(container);
             app.UseAutofacWebApi(config);
