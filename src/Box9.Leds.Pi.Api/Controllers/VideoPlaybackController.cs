@@ -43,7 +43,7 @@ namespace Box9.Leds.Pi.Api.Controllers
         }
 
         [ActionName("Stop")]
-        [HttpDelete]
+        [HttpPost]
         public GlobalJsonResult<EmptyResult> Stop(int videoId, [FromBody]StopVideoRequest request)
         {
             videoPlayer.Stop(request.PlaybackToken);

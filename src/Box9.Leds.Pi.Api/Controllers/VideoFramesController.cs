@@ -32,7 +32,7 @@ namespace Box9.Leds.Pi.Api.Controllers
         }
 
         [ActionName("ClearFrames")]
-        [HttpDelete]
+        [HttpPost]
         public GlobalJsonResult<EmptyResult> Clear(int videoId)
         {
             var video = videoService.GetById(videoId);

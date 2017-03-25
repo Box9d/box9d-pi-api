@@ -57,7 +57,7 @@ namespace Box9.Leds.Pi.Api.Controllers
         }
 
         [ActionName("DeleteVideo")]
-        [HttpDelete]
+        [HttpPost]
         public GlobalJsonResult<EmptyResult> Delete(int id)
         {
             videoComponentService.Delete(id);
