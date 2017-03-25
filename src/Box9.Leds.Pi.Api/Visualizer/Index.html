@@ -1,26 +1,54 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset='utf-8' />
     <title>Visualizer</title>
-    <link rel="stylesheet" type="text/css" href="css/visualizer.css">
-    <script src="Scripts/jquery-1.6.4.min.js"></script>
-    <script src="Scripts/jquery.signalR-2.2.1.min.js"></script>
-    <script src="signalr/hubs"></script>
+    <link rel='stylesheet' type='text/css' href='css/visualizer.css'>
+    <script src='Scripts/jquery-1.6.4.min.js'></script>
+    <script src='Scripts/jquery.signalR-2.2.1.min.js'></script>
+    <script src='signalr/hubs'></script>
 </head>
 <body>
     <div>
-        <label for="horizontalpixelscount">Number of pixels in a row</label>
-        <input id="horizontalpixelscount" type="number" />
+        <label for='rowcount'>Number of rows</label>
+        <input id='rowcount' type='number' value='1' />
     </div>
-    <div id="display">
-    </div>
-    <script type="text/javascript">
+    <div id='display' class='display'></div>
+    <script type='text/javascript'>
         $(function () {
             var playback = $.connection.signalRPlaybackService;
             playback.client.broadcastMessage = function (name, message) {
-                // todo: Display received messages on the page
+
+                if (name.toLower() === 'blackout') {
+                    $('#display').empty();
+                }
+
+                if (name.toLower() === 'frame') {
+                    var html = '';
+                    var pixelsPerRow = message.length / $('#rowcount').val();
+
+                    for (var i = 0; i < $('#rowcount').val(); i++) {
+                        var rowDiv = '<div>';
+                        for (var j = 0; j < pixelsPerRow; j++) {
+                            var color = message[i * pixelsPerRow + j + 1];
+                            rowDiv += '<div class=\'pixel\' style=\'background-color:' + color  + '\'/>';
+                        }
+
+                        rowDiv += '</div>';
+                        html += rowDiv;
+                    }
+
+                    $('#display').html(html);
+                }
             };
+        });
+
+        $(function () {
+            $('#rowcount').bind('input', function () {
+                if ($(this).val() === "0") {
+                    $(this).val("1"); // Do not allow 0 value
+                }
+            });
         });
     </script>
 </body>
