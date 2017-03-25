@@ -44,6 +44,8 @@ namespace Box9.Leds.Pi.Api
                 IsAspNetCore = false
             });
 
+            app.UseCustomFileServer();
+
             app.UseAutofacMiddleware(container);
             app.UseAutofacWebApi(config);
             app.UseWebApi(config);

@@ -183,6 +183,7 @@
     <Compile Include="Controllers\VideoMetadataController.cs" />
     <Compile Include="Controllers\VideoPlaybackController.cs" />
     <Compile Include="EmptyResult.cs" />
+    <Compile Include="FileServer.cs" />
     <Compile Include="Filters\GlobalActionFilter.cs" />
     <Compile Include="Filters\GlobalExceptionFilter.cs" />
     <Compile Include="GlobalJsonResult.cs" />
@@ -192,6 +193,12 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Visualizer\css\visualizer.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Visualizer\Index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -200,7 +207,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
