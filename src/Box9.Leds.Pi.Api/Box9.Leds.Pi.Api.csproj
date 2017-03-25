@@ -205,6 +205,9 @@
     <AdditionalFiles Include="Visualizer\Scripts\jquery-1.6.4-vsdoc.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AdditionalFiles>
+    <Content Include="Visualizer\Scripts\index.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Visualizer\Scripts\jquery-1.6.4.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

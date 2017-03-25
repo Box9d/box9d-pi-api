@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box9.Leds.Pi.Domain.Tests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box9.Leds.Pi.WebHost", "Box9.Leds.Pi.WebHost\Box9.Leds.Pi.WebHost.csproj", "{18D73078-F77B-48A5-8A70-4F3517FFF864}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box9.Leds.Pi.VisualizerTestHarness", "Box9.Leds.Pi.VisualizerTestHarness\Box9.Leds.Pi.VisualizerTestHarness.csproj", "{1355E529-7743-48EF-A20B-148DB980D81F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{18D73078-F77B-48A5-8A70-4F3517FFF864}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18D73078-F77B-48A5-8A70-4F3517FFF864}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18D73078-F77B-48A5-8A70-4F3517FFF864}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1355E529-7743-48EF-A20B-148DB980D81F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1355E529-7743-48EF-A20B-148DB980D81F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1355E529-7743-48EF-A20B-148DB980D81F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1355E529-7743-48EF-A20B-148DB980D81F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +86,6 @@ Global
 		{18BF8BF3-2F79-4C9C-9DAD-D8D889F97AC3} = {E6C8E10C-38FC-41F0-9152-70C864913932}
 		{6A29D3B3-53B6-4726-95A7-8422D5DDC494} = {E6C8E10C-38FC-41F0-9152-70C864913932}
 		{BD6A41E0-9BBE-4BBD-8CE1-4AAC494999B8} = {E6C8E10C-38FC-41F0-9152-70C864913932}
+		{1355E529-7743-48EF-A20B-148DB980D81F} = {E6C8E10C-38FC-41F0-9152-70C864913932}
 	EndGlobalSection
 EndGlobal

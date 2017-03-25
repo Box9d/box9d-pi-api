@@ -5,11 +5,18 @@ using System.Linq;
 
 namespace Box9.Leds.Pi.Domain.VideoPlayback
 {
-    public class SignalRPlaybackService : Hub, IPlaybackService
-    { 
+    public class SignalRPlaybackService : IPlaybackService
+    {
+        private readonly IHubContext hubContext;
+
+        public SignalRPlaybackService()
+        {
+            this.hubContext = GlobalHost.ConnectionManager.GetHubContext<PlaybackHub>();
+        }
+
         public void Blackout()
         {
-            Clients.All.broadcastMessage("Blackout", new { });
+            hubContext.Clients.All.broadcastMessage("Blackout", new { });
         }
 
         public void DisplayFrame(byte[] binaryData)
@@ -31,7 +38,11 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
                 skip += bytesPerColor;
             }
 
-            Clients.All.broadcastMessage("Frame", pixelHtmlColors);
+            hubContext.Clients.All.broadcastMessage("Frame", pixelHtmlColors);
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

@@ -7,6 +7,7 @@
     <script src='Scripts/jquery-1.6.4.min.js'></script>
     <script src='Scripts/jquery.signalR-2.2.1.min.js'></script>
     <script src='signalr/hubs'></script>
+    <script src='Scripts/index.js'></script>
 </head>
 <body>
     <div>
@@ -14,42 +15,5 @@
         <input id='rowcount' type='number' value='1' />
     </div>
     <div id='display' class='display'></div>
-    <script type='text/javascript'>
-        $(function () {
-            var playback = $.connection.signalRPlaybackService;
-            playback.client.broadcastMessage = function (name, message) {
-
-                if (name.toLower() === 'blackout') {
-                    $('#display').empty();
-                }
-
-                if (name.toLower() === 'frame') {
-                    var html = '';
-                    var pixelsPerRow = message.length / $('#rowcount').val();
-
-                    for (var i = 0; i < $('#rowcount').val(); i++) {
-                        var rowDiv = '<div>';
-                        for (var j = 0; j < pixelsPerRow; j++) {
-                            var color = message[i * pixelsPerRow + j + 1];
-                            rowDiv += '<div class=\'pixel\' style=\'background-color:' + color  + '\'/>';
-                        }
-
-                        rowDiv += '</div>';
-                        html += rowDiv;
-                    }
-
-                    $('#display').html(html);
-                }
-            };
-        });
-
-        $(function () {
-            $('#rowcount').bind('input', function () {
-                if ($(this).val() === "0") {
-                    $(this).val("1"); // Do not allow 0 value
-                }
-            });
-        });
-    </script>
 </body>
 </html>

@@ -75,6 +75,7 @@
     <Compile Include="VideoFrames\IVideoFrameComponentService.cs" />
     <Compile Include="VideoFrames\VideoFrame.cs" />
     <Compile Include="VideoFrames\VideoFrameComponentService.cs" />
+    <Compile Include="VideoPlayback\PlaybackHub.cs" />
     <Compile Include="VideoPlayback\SignalRPlaybackService.cs" />
     <Compile Include="VideoPlayback\FadecandyPlaybackService.cs" />
     <Compile Include="VideoPlayback\IPlaybackService.cs" />
