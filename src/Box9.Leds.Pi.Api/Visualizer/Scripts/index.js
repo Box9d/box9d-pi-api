@@ -1,19 +1,18 @@
 ﻿$(function () {
     var playback = $.connection.playbackHub;
     playback.client.broadcastMessage = function (name, message) {
-
-        if (name.toLower() === 'blackout') {
+        if (name.toLowerCase() === 'blackout') {
             $('#display').empty();
         }
 
-        if (name.toLower() === 'frame') {
+        if (name.toLowerCase() === 'frame') {
             var html = '';
-            var pixelsPerRow = message.length / $('#rowcount').val();
+            var pixelsPerRow = Math.ceil(message.length / $('#rowcount').val());
 
             for (var i = 0; i < $('#rowcount').val(); i++) {
-                var rowDiv = '<div>';
+                var rowDiv = '<div class=\'row\' style=\'width:' + pixelsPerRow * 15 + 'px;\'>';
                 for (var j = 0; j < pixelsPerRow; j++) {
-                    var color = message[i * pixelsPerRow + j + 1];
+                    var color = message[i * pixelsPerRow + j];
                     rowDiv += '<div class=\'pixel\' style=\'background-color:' + color + '\'/>';
                 }
 
@@ -24,6 +23,9 @@
             $('#display').html(html);
         }
     };
+
+    $.connection.hub.start().done(function () {
+    });
 });
 
 $(function () {
