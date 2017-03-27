@@ -38,9 +38,9 @@ namespace Box9.Leds.Pi.VisualizerTestHarness
                 while (stopwatch.ElapsedMilliseconds < 20000)
                 {
                     playback.DisplayFrame(BlackFrame(100));
-                    Thread.Sleep(500);
+                    Thread.Sleep(50);
                     playback.DisplayFrame(WhiteFrame(100));
-                    Thread.Sleep(500);
+                    Thread.Sleep(50);
                 }
             });
         }
