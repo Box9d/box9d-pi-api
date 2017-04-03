@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="DataAccessAutofacModule.cs" />
     <Compile Include="DatabaseFactory.cs" />
+    <Compile Include="Functions\IDbConnectionExtensions.cs" />
     <Compile Include="IDatabaseFactory.cs" />
     <Compile Include="Functions\VideoFrameFunctions.cs" />
     <Compile Include="Functions\VideoMetadataFunctions.cs" />

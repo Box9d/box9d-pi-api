@@ -24,7 +24,7 @@ namespace Box9.Leds.Pi.Api.Controllers
         {
             var video = videoService.GetById(videoId);
             var frames = request.AppendFrameRequests
-                .Select(req => frameService.Initialize(req.Id, req));
+                .Select(req => frameService.Initialize(1, req));
 
             video.AddFrames(frames);
 

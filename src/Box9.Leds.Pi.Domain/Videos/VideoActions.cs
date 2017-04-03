@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using Box9.Leds.Pi.DataAccess.Functions;
 using Box9.Leds.Pi.Domain.VideoFrames;
+using Box9.Leds.Pi.DataAccess.Models;
 
 namespace Box9.Leds.Pi.Domain.Videos
 {
@@ -15,12 +16,17 @@ namespace Box9.Leds.Pi.Domain.Videos
             {
                 var transaction = conn.BeginTransaction();
 
+                var nextId = conn.GetNextId<VideoFrameModel>();
+
                 try
                 {
                     foreach (var frame in framesToAdd)
                     {
                         frame.SetVideo(video);
+                        frame.Model.Id = nextId;
                         conn.InsertVideoFrame(frame.Model, transaction);
+
+                        nextId++;
                     }
 
                     transaction.Commit();
