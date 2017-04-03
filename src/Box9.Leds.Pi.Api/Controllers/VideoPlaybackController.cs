@@ -48,7 +48,7 @@ namespace Box9.Leds.Pi.Api.Controllers
         {
             videoPlayer.Stop(request.PlaybackToken);
 
-            return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.NoContent);
+            return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.OK);
         }
     }
 }

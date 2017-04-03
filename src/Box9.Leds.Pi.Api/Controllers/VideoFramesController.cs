@@ -38,7 +38,7 @@ namespace Box9.Leds.Pi.Api.Controllers
             var video = videoService.GetById(videoId);
             video.ClearFrames();
 
-            return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.NoContent);
+            return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.OK);
         }
     }
 }

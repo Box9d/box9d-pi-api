@@ -62,7 +62,7 @@ namespace Box9.Leds.Pi.Api.Controllers
         {
             videoComponentService.Delete(id);
 
-            return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.NoContent);
+            return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.OK);
         }
     }
 }
