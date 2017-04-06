@@ -6,6 +6,7 @@ using Box9.Leds.Pi.Api.ApiRequests;
 using Box9.Leds.Pi.Api.ApiResults;
 using Box9.Leds.Pi.Api.RequestParsing;
 using Box9.Leds.Pi.Domain.Videos;
+using System;
 
 namespace Box9.Leds.Pi.Api.Controllers
 {
@@ -30,6 +31,8 @@ namespace Box9.Leds.Pi.Api.Controllers
                     result.Populate(v);
                     return result;
                 });
+
+            throw new Exception("Test");
 
             return GlobalJsonResult<IEnumerable<VideoMetadataResult>>.Success(HttpStatusCode.OK, results);
         }
