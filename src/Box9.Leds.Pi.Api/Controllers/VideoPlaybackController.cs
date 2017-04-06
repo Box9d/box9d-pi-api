@@ -4,6 +4,7 @@ using Box9.Leds.Pi.Api.ApiRequests;
 using Box9.Leds.Pi.Api.ApiResults;
 using Box9.Leds.Pi.Domain.VideoPlayback;
 using Box9.Leds.Pi.Domain.Videos;
+using Autofac;
 
 namespace Box9.Leds.Pi.Api.Controllers
 {
@@ -11,6 +12,12 @@ namespace Box9.Leds.Pi.Api.Controllers
     {
         private readonly IVideoPlayer videoPlayer;
         private readonly IVideoComponentService videoComponentService;
+
+        public VideoPlaybackController()
+        {
+            videoPlayer = Startup.Container.Resolve<IVideoPlayer>();
+            videoComponentService = Startup.Container.Resolve<IVideoComponentService>();
+        }
 
         public VideoPlaybackController(IVideoComponentService videoComponentService, IVideoPlayer videoPlayer)
         {

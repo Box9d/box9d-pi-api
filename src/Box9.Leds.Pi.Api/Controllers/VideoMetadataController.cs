@@ -7,12 +7,18 @@ using Box9.Leds.Pi.Api.ApiResults;
 using Box9.Leds.Pi.Api.RequestParsing;
 using Box9.Leds.Pi.Domain.Videos;
 using System;
+using Autofac;
 
 namespace Box9.Leds.Pi.Api.Controllers
 {
     public class VideoMetadataController : ApiController
     {
         private readonly IVideoComponentService videoComponentService;
+
+        public VideoMetadataController()
+        {
+            this.videoComponentService = Startup.Container.Resolve<IVideoComponentService>();
+        }
 
         public VideoMetadataController(IVideoComponentService videoComponentService)
         {
@@ -31,8 +37,6 @@ namespace Box9.Leds.Pi.Api.Controllers
                     result.Populate(v);
                     return result;
                 });
-
-            throw new Exception("Test");
 
             return GlobalJsonResult<IEnumerable<VideoMetadataResult>>.Success(HttpStatusCode.OK, results);
         }

@@ -16,6 +16,9 @@ namespace Box9.Leds.Pi.Api
 {
     public class Startup
     {
+        // Bug: Mono does not like DI with Autofac :(
+        public static IContainer Container { get; private set; }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configuration(IAppBuilder app)
         {
@@ -36,6 +39,7 @@ namespace Box9.Leds.Pi.Api
             builder.RegisterModule<ApiModule>();
 
             var container = builder.Build();
+            Container = container;
 
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
@@ -50,7 +54,7 @@ namespace Box9.Leds.Pi.Api
 
             app.MapSignalR();
 
-            app.UseAutofacMiddleware(container);
+            // app.UseAutofacMiddleware(container);
             app.UseAutofacWebApi(config);
             app.UseWebApi(config);
 

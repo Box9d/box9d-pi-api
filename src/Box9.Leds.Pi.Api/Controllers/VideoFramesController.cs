@@ -4,6 +4,7 @@ using System.Web.Http;
 using Box9.Leds.Pi.Api.ApiRequests;
 using Box9.Leds.Pi.Domain.VideoFrames;
 using Box9.Leds.Pi.Domain.Videos;
+using Autofac;
 
 namespace Box9.Leds.Pi.Api.Controllers
 {
@@ -11,6 +12,12 @@ namespace Box9.Leds.Pi.Api.Controllers
     {
         private readonly IVideoFrameComponentService frameService;
         private readonly IVideoComponentService videoService;
+
+        public VideoFramesController()
+        {
+            this.frameService = Startup.Container.Resolve<IVideoFrameComponentService>();
+            this.videoService = Startup.Container.Resolve<IVideoComponentService>();
+        }
 
         public VideoFramesController(IVideoComponentService videoService, IVideoFrameComponentService frameService)
         {
