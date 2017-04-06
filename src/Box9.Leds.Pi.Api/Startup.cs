@@ -38,6 +38,7 @@ namespace Box9.Leds.Pi.Api
             var container = builder.Build();
 
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+            config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
             app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, new SwaggerUiOwinSettings
             {
