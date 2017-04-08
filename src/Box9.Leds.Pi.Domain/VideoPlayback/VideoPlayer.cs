@@ -8,6 +8,7 @@ using Box9.Leds.Pi.Core.Identifiers;
 using Box9.Leds.Pi.Domain.Dispatch;
 using Box9.Leds.Pi.Domain.VideoFrames;
 using Box9.Leds.Pi.Domain.Videos;
+using Box9.Leds.Pi.Domain.Logging;
 
 namespace Box9.Leds.Pi.Domain.VideoPlayback
 {
@@ -16,17 +17,20 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
         private readonly IPlaybackServiceFactory playbackServiceFactory;
         private readonly IVideoPlayerMonitor videoPlayerMonitor;
         private readonly IDispatcher dispatcher;
+        private readonly ILog log;
 
         private IEnumerable<VideoFrame> frames;
         private KeyValuePair<string, CancellationTokenSource> cancellationTokenPair;
 
         public VideoPlayer(IPlaybackServiceFactory playbackServiceFactory,
             IVideoPlayerMonitor videoPlayerMonitor,
-            IDispatcher dispatcher)
+            IDispatcher dispatcher,
+            ILog log)
         {
             this.playbackServiceFactory = playbackServiceFactory;
             this.videoPlayerMonitor = videoPlayerMonitor;
             this.dispatcher = dispatcher;
+            this.log = log;
         }
 
         public VideoPlaybackToken Load(Video video)
@@ -70,27 +74,34 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
 
         internal void Play(Video video)
         {
-            using (var playback = playbackServiceFactory.Playback())
+            try
             {
-                var stopwatch = new Stopwatch();
-                stopwatch.Start();
-                videoPlayerMonitor.PlaybackStarted();
-
-                while (stopwatch.ElapsedMilliseconds < (frames.Count() / video.FrameRate) * 1000)
+                using (var playback = playbackServiceFactory.Playback())
                 {
-                    var framePosition = CalculateFramePosition(video, stopwatch.ElapsedMilliseconds);
-                    var frame = frames.SingleOrDefault(f => f.Position == framePosition);
+                    var stopwatch = new Stopwatch();
+                    stopwatch.Start();
+                    videoPlayerMonitor.PlaybackStarted();
 
-                    if (frame != null)
+                    while (stopwatch.ElapsedMilliseconds < (frames.Count() / video.FrameRate) * 1000)
                     {
-                        playback.DisplayFrame(frame.BinaryData);
+                        var framePosition = CalculateFramePosition(video, stopwatch.ElapsedMilliseconds);
+                        var frame = frames.SingleOrDefault(f => f.Position == framePosition);
+
+                        if (frame != null)
+                        {
+                            playback.DisplayFrame(frame.BinaryData);
+                        }
+
+                        videoPlayerMonitor.FrameReceived();
                     }
 
-                    videoPlayerMonitor.FrameReceived();
+                    playback.Blackout();
+                    videoPlayerMonitor.PlaybackFinished();
                 }
-
-                playback.Blackout();
-                videoPlayerMonitor.PlaybackFinished();
+            }
+            catch (Exception ex)
+            {
+                log.Add(ex);
             }
         }
 

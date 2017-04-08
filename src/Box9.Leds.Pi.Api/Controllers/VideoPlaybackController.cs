@@ -5,6 +5,8 @@ using Box9.Leds.Pi.Api.ApiResults;
 using Box9.Leds.Pi.Domain.VideoPlayback;
 using Box9.Leds.Pi.Domain.Videos;
 using Autofac;
+using System.Collections.Generic;
+using Box9.Leds.Pi.Domain.Logging;
 
 namespace Box9.Leds.Pi.Api.Controllers
 {
@@ -12,17 +14,20 @@ namespace Box9.Leds.Pi.Api.Controllers
     {
         private readonly IVideoPlayer videoPlayer;
         private readonly IVideoComponentService videoComponentService;
+        private readonly ILog log;
 
         public VideoPlaybackController()
         {
             videoPlayer = Startup.Container.Resolve<IVideoPlayer>();
             videoComponentService = Startup.Container.Resolve<IVideoComponentService>();
+            log = Startup.Container.Resolve<ILog>();
         }
 
-        public VideoPlaybackController(IVideoComponentService videoComponentService, IVideoPlayer videoPlayer)
+        public VideoPlaybackController(IVideoComponentService videoComponentService, IVideoPlayer videoPlayer, ILog log)
         {
             this.videoComponentService = videoComponentService;
             this.videoPlayer = videoPlayer;
+            this.log = log;
         }
 
         [ActionName("Load")]
@@ -56,6 +61,13 @@ namespace Box9.Leds.Pi.Api.Controllers
             videoPlayer.Stop(request.PlaybackToken);
 
             return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.OK);
+        }
+
+        [ActionName("Log")]
+        [HttpGet]
+        public GlobalJsonResult<IEnumerable<string>> Log()
+        {
+            return GlobalJsonResult<IEnumerable<string>>.Success(HttpStatusCode.OK, log.Messages);
         }
     }
 }
