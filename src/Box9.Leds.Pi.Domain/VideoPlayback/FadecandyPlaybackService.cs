@@ -13,7 +13,7 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
 
         public FadecandyPlaybackService(IOptions<VideoPlayerOptions> options)
         {
-            var uri = new Uri(string.Format("ws://127.0.0.1:7890"));
+            var uri = new Uri(string.Format("ws://localhost:7890"));
 
             socket = new ClientWebSocket();
 
