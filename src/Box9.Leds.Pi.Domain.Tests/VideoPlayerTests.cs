@@ -7,6 +7,7 @@ using Box9.Leds.Pi.Domain.VideoFrames;
 using Box9.Leds.Pi.Domain.VideoPlayback;
 using FakeItEasy;
 using Xunit;
+using Box9.Leds.Pi.Domain.Logging;
 
 namespace Box9.Leds.Pi.Domain.Tests
 {
@@ -18,8 +19,9 @@ namespace Box9.Leds.Pi.Domain.Tests
             var playbackServiceFactory = A.Fake<IPlaybackServiceFactory>();
             var videoPlayerMonitor = A.Fake<IVideoPlayerMonitor>();
             var dispatcher = A.Fake<IDispatcher>();
+            var log = A.Fake<ILog>();
 
-            var videoPlayer = new VideoPlayer(playbackServiceFactory, videoPlayerMonitor, dispatcher);
+            var videoPlayer = new VideoPlayer(playbackServiceFactory, videoPlayerMonitor, dispatcher, log);
             var video = DummyVideo(A.Dummy<VideoMetadataModel>());
 
             videoPlayer.Load(video);
@@ -34,8 +36,9 @@ namespace Box9.Leds.Pi.Domain.Tests
             var playbackServiceFactory = A.Fake<IPlaybackServiceFactory>();
             var videoPlayerMonitor = A.Fake<IVideoPlayerMonitor>();
             var dispatcher = A.Fake<IDispatcher>();
+            var log = A.Fake<ILog>();
 
-            var videoPlayer = new VideoPlayer(playbackServiceFactory, videoPlayerMonitor, dispatcher);
+            var videoPlayer = new VideoPlayer(playbackServiceFactory, videoPlayerMonitor, dispatcher, log);
 
             var videoMetadataModel = new VideoMetadataModel
             {
@@ -66,8 +69,9 @@ namespace Box9.Leds.Pi.Domain.Tests
             var playbackServiceFactory = A.Fake<IPlaybackServiceFactory>();
             var videoPlayerMonitor = A.Fake<IVideoPlayerMonitor>();
             var dispatcher = A.Fake<IDispatcher>();
+            var log = A.Fake<ILog>();
 
-            var videoPlayer = new VideoPlayer(playbackServiceFactory, videoPlayerMonitor, dispatcher);
+            var videoPlayer = new VideoPlayer(playbackServiceFactory, videoPlayerMonitor, dispatcher, log);
             var video = DummyVideo(new VideoMetadataModel
             {
                 FrameRate = 1000
