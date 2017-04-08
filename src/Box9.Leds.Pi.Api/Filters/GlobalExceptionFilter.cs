@@ -1,3 +1,4 @@
+using Microsoft.AspNet.SignalR;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -12,6 +13,9 @@ namespace Box9.Leds.Pi.Api.Filters
         {
             if (context.Exception != null)
             {
+                var loggerHub = GlobalHost.ConnectionManager.GetHubContext<LoggerHub>();
+                loggerHub.Clients.All.broadcastMessage("log", new[] { DateTime.Now.ToString("s"), context.Exception.Message, context.Exception.StackTrace });
+
                 if (context.Exception is InvalidOperationException || context.Exception is ArgumentException)
                 {
                     context.Response = new HttpResponseMessage(HttpStatusCode.BadRequest);

@@ -6,12 +6,19 @@ using Box9.Leds.Pi.Api.ApiRequests;
 using Box9.Leds.Pi.Api.ApiResults;
 using Box9.Leds.Pi.Api.RequestParsing;
 using Box9.Leds.Pi.Domain.Videos;
+using System;
+using Autofac;
 
 namespace Box9.Leds.Pi.Api.Controllers
 {
     public class VideoMetadataController : ApiController
     {
         private readonly IVideoComponentService videoComponentService;
+
+        public VideoMetadataController()
+        {
+            this.videoComponentService = Startup.Container.Resolve<IVideoComponentService>();
+        }
 
         public VideoMetadataController(IVideoComponentService videoComponentService)
         {
@@ -62,7 +69,7 @@ namespace Box9.Leds.Pi.Api.Controllers
         {
             videoComponentService.Delete(id);
 
-            return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.NoContent);
+            return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.OK);
         }
     }
 }
