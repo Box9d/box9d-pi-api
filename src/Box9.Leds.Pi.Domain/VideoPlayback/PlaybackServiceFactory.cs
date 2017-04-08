@@ -12,15 +12,7 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
             this.options = options;
         }
 
-        public Func<IPlaybackService> Playback
-        {
-            get
-            {
-                return () => GetPlaybackService();
-            }
-        }
-
-        private IPlaybackService GetPlaybackService()
+        public IPlaybackService GetPlaybackService()
         {
             if (options.Value.UseFadecandyServer)
             {

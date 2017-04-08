@@ -65,7 +65,7 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
 
             cancellationTokenPair.Value.Cancel();
 
-            using (var playback = playbackServiceFactory.Playback())
+            using (var playback = playbackServiceFactory.GetPlaybackService())
             {
                 playback.Blackout();
                 videoPlayerMonitor.PlaybackFinished();
@@ -76,7 +76,7 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
         {
             try
             {
-                using (var playback = playbackServiceFactory.Playback())
+                using (var playback = playbackServiceFactory.GetPlaybackService())
                 {
                     var stopwatch = new Stopwatch();
                     stopwatch.Start();
