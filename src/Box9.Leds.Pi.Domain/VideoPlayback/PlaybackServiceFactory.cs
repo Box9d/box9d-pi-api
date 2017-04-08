@@ -16,10 +16,18 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
         {
             get
             {
-                return () => options.Value.UseFadecandyServer
-                    ? (IPlaybackService)new FadecandyPlaybackService(options)
-                    : (IPlaybackService)new SignalRPlaybackService();
+                return () => GetPlaybackService();
             }
+        }
+
+        private IPlaybackService GetPlaybackService()
+        {
+            if (options.Value.UseFadecandyServer)
+            {
+                return new FadecandyPlaybackService(options);
+            }
+
+            return new SignalRPlaybackService();
         }
     }
 }
