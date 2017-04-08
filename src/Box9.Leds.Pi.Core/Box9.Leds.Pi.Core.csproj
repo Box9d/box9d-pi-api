@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Box9.Leds.Pi.Core</RootNamespace>
     <AssemblyName>Box9.Leds.Pi.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,10 +35,6 @@
       <HintPath>..\packages\Autofac.4.4.0\lib\net45\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SimpleMapping, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleMapping.1.0.8\lib\net461\SimpleMapping.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -52,6 +49,8 @@
     <Compile Include="Config\IOptions.cs" />
     <Compile Include="Config\Options.cs" />
     <Compile Include="CoreAutofacModule.cs" />
+    <Compile Include="Mapping\IMappableTo.cs" />
+    <Compile Include="Mapping\IPopulatableFrom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Config\DropBoxApiOptions.cs" />
     <Compile Include="Config\VideoPlayerOptions.cs" />

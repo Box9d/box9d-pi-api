@@ -1,5 +1,5 @@
-﻿using Box9.Leds.Pi.Domain;
-using SimpleMapping;
+﻿using Box9.Leds.Pi.Core.Mapping;
+using Box9.Leds.Pi.Domain;
 
 namespace Box9.Leds.Pi.Api.ApiResults
 {

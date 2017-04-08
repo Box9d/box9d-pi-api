@@ -1,7 +1,7 @@
-﻿using Box9.Leds.Pi.DataAccess;
+﻿using Box9.Leds.Pi.Core.Mapping;
+using Box9.Leds.Pi.DataAccess;
 using Box9.Leds.Pi.DataAccess.Models;
 using Box9.Leds.Pi.Domain.Componentization.Initializers;
-using SimpleMapping;
 
 namespace Box9.Leds.Pi.Domain.VideoFrames
 {

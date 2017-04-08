@@ -1,4 +1,4 @@
-﻿using SimpleMapping;
+﻿using Box9.Leds.Pi.Core.Mapping;
 
 namespace Box9.Leds.Pi.Domain.Componentization
 {

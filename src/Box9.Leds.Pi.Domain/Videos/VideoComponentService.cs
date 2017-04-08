@@ -6,7 +6,7 @@ using Box9.Leds.Pi.DataAccess.Functions;
 using Box9.Leds.Pi.DataAccess.Models;
 using Box9.Leds.Pi.Domain.Componentization.Initializers;
 using Box9.Leds.Pi.Domain.Dispatch;
-using SimpleMapping;
+using Box9.Leds.Pi.Core.Mapping;
 
 namespace Box9.Leds.Pi.Domain.Videos
 {
