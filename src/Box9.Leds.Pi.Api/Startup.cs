@@ -9,7 +9,11 @@ using Box9.Leds.Pi.Api.Filters;
 using Microsoft.Owin;
 using NSwag.AspNet.Owin;
 using Owin;
-using Microsoft.AspNet.SignalR;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Linq;
+using System;
 
 [assembly: OwinStartup(typeof(Startup))]
 namespace Box9.Leds.Pi.Api
@@ -26,6 +30,11 @@ namespace Box9.Leds.Pi.Api
             config.Routes.MapHttpRoute(name: "VideoIdControllerAndAction", routeTemplate: "api/Video/{videoId}/{controller}/{action}");
             config.Filters.Add(new GlobalExceptionFilter());
             config.Filters.Add(new GlobalActionFilter());
+
+            if (Type.GetType("Mono.Runtime") != null)
+            {
+                config.MessageHandlers.Add(new MonoPatchingDelegatingHandler());
+            }
 
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
@@ -55,6 +64,19 @@ namespace Box9.Leds.Pi.Api
 
             config.MapHttpAttributeRoutes();
             config.EnsureInitialized();
+        }
+
+        /// <summary>
+        /// Work around a bug in mono's implementation of System.Net.Http where calls to HttpRequestMessage.Headers.Host will fail unless we set it explicitly.
+        /// This should be transparent and cause no side effects.
+        /// </summary>
+        private class MonoPatchingDelegatingHandler : DelegatingHandler
+        {
+            protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+            {
+                request.Headers.Host = request.Headers.GetValues("Host").FirstOrDefault();
+                return await base.SendAsync(request, cancellationToken);
+            }
         }
     }
 }
