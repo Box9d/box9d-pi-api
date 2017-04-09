@@ -46,17 +46,8 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
         }
 
         public void DisplayFrame(byte[] binaryData)
-        {
-            estimatedNumberOfBits = binaryData.Length;
-
-            var data = new List<byte>
-            {
-                0,0,0,0
-            };
-
-            data.AddRange(binaryData);
-
-            socket.SendAsync(new ArraySegment<byte>(data.ToArray()), WebSocketMessageType.Binary, true, CancellationToken.None).Wait();
+        { 
+            socket.SendAsync(new ArraySegment<byte>(binaryData), WebSocketMessageType.Binary, true, CancellationToken.None).Wait();
         }
 
         public void Dispose()
