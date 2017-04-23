@@ -80,7 +80,7 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
                 {
                     var stopwatch = new Stopwatch();
                     stopwatch.Start();
-                    videoPlayerMonitor.PlaybackStarted();
+                    log.Add("Video playback started");
 
                     while (stopwatch.ElapsedMilliseconds < (frames.Count() / video.FrameRate) * 1000)
                     {
@@ -89,14 +89,15 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
 
                         if (frame != null)
                         {
+                            log.Add("Sending frame");
                             playback.DisplayFrame(frame.BinaryData);
                         }
 
-                        videoPlayerMonitor.FrameReceived();
+                        log.Add("Video frame received");
                     }
 
                     playback.Blackout();
-                    videoPlayerMonitor.PlaybackFinished();
+                    log.Add("Playback finished");
                 }
             }
             catch (Exception ex)
