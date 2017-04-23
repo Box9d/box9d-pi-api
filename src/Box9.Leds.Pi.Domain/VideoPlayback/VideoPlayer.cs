@@ -47,13 +47,13 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
         }
 
         public async Task PlayAsync(Video video, string playbackToken)
-        {    
+        {
             if (cancellationTokenPair.Key != playbackToken)
             {
                 throw new ArgumentException("Playback token not recognized");
             }
 
-            await Task.Run(() => Play(video), cancellationTokenPair.Value.Token); 
+            await Task.Run(() => Play(video), cancellationTokenPair.Value.Token);
         }
 
         public void Stop(string playbackToken)
@@ -74,35 +74,38 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
 
         internal void Play(Video video)
         {
+            var playback = playbackServiceFactory.GetPlaybackService();
+
             try
             {
-                using (var playback = playbackServiceFactory.GetPlaybackService())
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
+                log.Add("Video playback started");
+
+                while (stopwatch.ElapsedMilliseconds < (frames.Count() / video.FrameRate) * 1000)
                 {
-                    var stopwatch = new Stopwatch();
-                    stopwatch.Start();
-                    log.Add("Video playback started");
+                    var framePosition = CalculateFramePosition(video, stopwatch.ElapsedMilliseconds);
+                    var frame = frames.SingleOrDefault(f => f.Position == framePosition);
 
-                    while (stopwatch.ElapsedMilliseconds < (frames.Count() / video.FrameRate) * 1000)
+                    if (frame != null)
                     {
-                        var framePosition = CalculateFramePosition(video, stopwatch.ElapsedMilliseconds);
-                        var frame = frames.SingleOrDefault(f => f.Position == framePosition);
-
-                        if (frame != null)
-                        {
-                            log.Add("Sending frame");
-                            playback.DisplayFrame(frame.BinaryData);
-                        }
-
-                        log.Add("Video frame received");
+                        log.Add("Sending frame");
+                        playback.DisplayFrame(frame.BinaryData);
                     }
 
-                    playback.Blackout();
-                    log.Add("Playback finished");
+                    log.Add("Video frame received");
                 }
+
+                playback.Blackout();
+                log.Add("Playback finished");
             }
             catch (Exception ex)
             {
                 log.Add(ex);
+            }
+            finally
+            {
+                playback.Dispose();
             }
         }
 
