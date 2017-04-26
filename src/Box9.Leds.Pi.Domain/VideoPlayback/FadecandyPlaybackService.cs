@@ -1,27 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.WebSockets;
-using System.Threading;
 using Box9.Leds.Pi.Core.Config;
+using System.Net;
+using WebSocketSharp;
 
 namespace Box9.Leds.Pi.Domain.VideoPlayback
 {
     public class FadecandyPlaybackService : IPlaybackService
     {
-        private readonly ClientWebSocket socket;
+        private const int preDataLength = 4;
+        private const int bytesPerPixel = 3;
+
+        private readonly WebSocket socket;
         private int estimatedNumberOfBits;
 
         public FadecandyPlaybackService(IOptions<VideoPlayerOptions> options)
         {
-            var uri = new Uri(string.Format("ws://localhost:7890"));
-
-            socket = new ClientWebSocket();
+            socket = new WebSocket("ws://localhost:7890");
+            socket.OnClose += (s, args) =>
+            {
+                try
+                {
+                    socket.Connect();
+                }
+                finally
+                {
+                }
+            };
 
             try
             {
-                socket.ConnectAsync(uri, CancellationToken.None).Wait();
+                socket.Connect();
 
-                if (socket.State != WebSocketState.Open)
+                if (!socket.IsAlive)
                 {
                     throw new Exception("Could not open websocket");
                 }
@@ -46,13 +57,15 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
         }
 
         public void DisplayFrame(byte[] binaryData)
-        { 
-            socket.SendAsync(new ArraySegment<byte>(binaryData), WebSocketMessageType.Binary, true, CancellationToken.None).Wait();
+        {
+            estimatedNumberOfBits = ((binaryData.Length - preDataLength) / 3) + 1;
+
+            socket.Send(binaryData);
         }
 
         public void Dispose()
         {
-            socket.Dispose();
+            // socket.Dispose();
         }
     }
 }
