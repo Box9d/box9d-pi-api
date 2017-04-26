@@ -60,7 +60,10 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
         {
             estimatedNumberOfBits = ((binaryData.Length - preDataLength) / 3) + 1;
 
-            socket.Send(binaryData);
+            if (socket.IsAlive)
+            {
+                socket.Send(binaryData);
+            }
         }
 
         public void Dispose()
