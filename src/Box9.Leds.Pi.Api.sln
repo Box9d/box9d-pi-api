@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.0
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E6C8E10C-38FC-41F0-9152-70C864913932}"
 EndProject
@@ -26,6 +26,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box9.Leds.Pi.WebHost", "Box9.Leds.Pi.WebHost\Box9.Leds.Pi.WebHost.csproj", "{18D73078-F77B-48A5-8A70-4F3517FFF864}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box9.Leds.Pi.VisualizerTestHarness", "Box9.Leds.Pi.VisualizerTestHarness\Box9.Leds.Pi.VisualizerTestHarness.csproj", "{1355E529-7743-48EF-A20B-148DB980D81F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stub", "Stub", "{A02F9AC5-C8A6-4861-B8BD-9399A82811A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Box9.Leds.Pi.WebSocketStub", "Box9.Leds.Pi.WebSocketStub\Box9.Leds.Pi.WebSocketStub.csproj", "{4C9E00AE-D80B-450E-A76B-A4F02F628DF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,6 +127,14 @@ Global
 		{1355E529-7743-48EF-A20B-148DB980D81F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1355E529-7743-48EF-A20B-148DB980D81F}.Release|x86.ActiveCfg = Release|x86
 		{1355E529-7743-48EF-A20B-148DB980D81F}.Release|x86.Build.0 = Release|x86
+		{4C9E00AE-D80B-450E-A76B-A4F02F628DF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C9E00AE-D80B-450E-A76B-A4F02F628DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C9E00AE-D80B-450E-A76B-A4F02F628DF6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4C9E00AE-D80B-450E-A76B-A4F02F628DF6}.Debug|x86.Build.0 = Debug|Any CPU
+		{4C9E00AE-D80B-450E-A76B-A4F02F628DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C9E00AE-D80B-450E-A76B-A4F02F628DF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C9E00AE-D80B-450E-A76B-A4F02F628DF6}.Release|x86.ActiveCfg = Release|Any CPU
+		{4C9E00AE-D80B-450E-A76B-A4F02F628DF6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,5 +145,6 @@ Global
 		{6A29D3B3-53B6-4726-95A7-8422D5DDC494} = {E6C8E10C-38FC-41F0-9152-70C864913932}
 		{BD6A41E0-9BBE-4BBD-8CE1-4AAC494999B8} = {E6C8E10C-38FC-41F0-9152-70C864913932}
 		{1355E529-7743-48EF-A20B-148DB980D81F} = {E6C8E10C-38FC-41F0-9152-70C864913932}
+		{4C9E00AE-D80B-450E-A76B-A4F02F628DF6} = {A02F9AC5-C8A6-4861-B8BD-9399A82811A4}
 	EndGlobalSection
 EndGlobal
