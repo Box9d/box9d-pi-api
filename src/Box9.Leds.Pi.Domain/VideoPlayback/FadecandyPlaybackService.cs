@@ -21,7 +21,7 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
 
             try
             {
-                socket.ConnectAsync(new Uri("ws://192.168.1.15:7890"), CancellationToken.None).Wait();
+                socket.ConnectAsync(new Uri("ws://localhost:7890"), CancellationToken.None).Wait();
 
                 if (socket.State != WebSocketState.Open)
                 {
