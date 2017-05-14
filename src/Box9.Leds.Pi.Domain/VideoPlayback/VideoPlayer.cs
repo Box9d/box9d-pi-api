@@ -9,6 +9,7 @@ using Box9.Leds.Pi.Domain.Dispatch;
 using Box9.Leds.Pi.Domain.VideoFrames;
 using Box9.Leds.Pi.Domain.Videos;
 using Box9.Leds.Pi.Domain.Logging;
+using Box9.Leds.WebSocket.ApiClient;
 
 namespace Box9.Leds.Pi.Domain.VideoPlayback
 {
@@ -18,8 +19,8 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
         private readonly IVideoPlayerMonitor videoPlayerMonitor;
         private readonly IDispatcher dispatcher;
         private readonly ILog log;
+        private readonly WebSocketApiClient websocketClient;
 
-        private IEnumerable<VideoFrame> frames;
         private KeyValuePair<string, CancellationTokenSource> cancellationTokenPair;
 
         public VideoPlayer(IPlaybackServiceFactory playbackServiceFactory,
@@ -31,11 +32,13 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
             this.videoPlayerMonitor = videoPlayerMonitor;
             this.dispatcher = dispatcher;
             this.log = log;
+            this.websocketClient = new WebSocketApiClient(new Uri("http://localhost:8003"));
         }
 
         public VideoPlaybackToken Load(Video video)
         {
-            frames = dispatcher.Dispatch(video.DispatchGetFramesForVideo());
+            var frames = dispatcher.Dispatch(video.DispatchGetFramesForVideo());
+            websocketClient.Load(new LoadRequest { Frames = frames.Select(f => f.BinaryData.Select(d => (int)d).ToArray()).ToArray() }).Wait();
 
             var cancellationTokenSource = new CancellationTokenSource();
             var playbackToken = ShortGuid.NewGuid().ToString();
@@ -72,41 +75,9 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
             }
         }
 
-        internal void Play(Video video)
+        internal async Task Play(Video video)
         {
-            var playback = playbackServiceFactory.GetPlaybackService();
-
-            try
-            {
-                var stopwatch = new Stopwatch();
-                stopwatch.Start();
-                log.Add("Video playback started");
-
-                while (stopwatch.ElapsedMilliseconds < (frames.Count() / video.FrameRate) * 1000)
-                {
-                    var framePosition = CalculateFramePosition(video, stopwatch.ElapsedMilliseconds);
-                    var frame = frames.SingleOrDefault(f => f.Position == framePosition);
-
-                    if (frame != null)
-                    {
-                        log.Add("Sending frame");
-                        playback.DisplayFrame(frame.BinaryData);
-                    }
-
-                    log.Add("Video frame received");
-                }
-
-                playback.Blackout();
-                log.Add("Playback finished");
-            }
-            catch (Exception ex)
-            {
-                log.Add(ex);
-            }
-            finally
-            {
-                playback.Dispose();
-            }
+            await websocketClient.Play(video.FrameRate);
         }
 
         internal int CalculateFramePosition(Video video, long elapsedMilliseconds)
