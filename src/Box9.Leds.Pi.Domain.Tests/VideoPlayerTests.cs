@@ -17,11 +17,10 @@ namespace Box9.Leds.Pi.Domain.Tests
         public void WhenILoadAVideo_FramesAreLoadedIntoMemory()
         {
             var playbackServiceFactory = A.Fake<IPlaybackServiceFactory>();
-            var videoPlayerMonitor = A.Fake<IVideoPlayerMonitor>();
             var dispatcher = A.Fake<IDispatcher>();
             var log = A.Fake<ILog>();
 
-            var videoPlayer = new VideoPlayer(playbackServiceFactory, videoPlayerMonitor, dispatcher, log);
+            var videoPlayer = new VideoPlayer(playbackServiceFactory, dispatcher, log);
             var video = DummyVideo(A.Dummy<VideoMetadataModel>());
 
             videoPlayer.Load(video);
@@ -34,11 +33,10 @@ namespace Box9.Leds.Pi.Domain.Tests
         public async void WhenILoadAVideo_ThenPlaybackWithTheCorrectPlaybackToken_VideoWillPlay()
         {
             var playbackServiceFactory = A.Fake<IPlaybackServiceFactory>();
-            var videoPlayerMonitor = A.Fake<IVideoPlayerMonitor>();
             var dispatcher = A.Fake<IDispatcher>();
             var log = A.Fake<ILog>();
 
-            var videoPlayer = new VideoPlayer(playbackServiceFactory, videoPlayerMonitor, dispatcher, log);
+            var videoPlayer = new VideoPlayer(playbackServiceFactory, dispatcher, log);
 
             var videoMetadataModel = new VideoMetadataModel
             {
@@ -58,27 +56,24 @@ namespace Box9.Leds.Pi.Domain.Tests
             var video = DummyVideo(videoMetadataModel, videoFrames);
 
             var playbackToken = videoPlayer.Load(video);
-            await videoPlayer.PlayAsync(video, playbackToken.Token);
-
-            // If PlayAsync does not throw an error, then token is valid
+            await videoPlayer.Play(video);
         }
 
         [Fact]
         public void WhenILoadAVideo_ThenPlaybackWithTheIncorrectPlaybackToken_WillThrowArgumentException()
         {
             var playbackServiceFactory = A.Fake<IPlaybackServiceFactory>();
-            var videoPlayerMonitor = A.Fake<IVideoPlayerMonitor>();
             var dispatcher = A.Fake<IDispatcher>();
             var log = A.Fake<ILog>();
 
-            var videoPlayer = new VideoPlayer(playbackServiceFactory, videoPlayerMonitor, dispatcher, log);
+            var videoPlayer = new VideoPlayer(playbackServiceFactory, dispatcher, log);
             var video = DummyVideo(new VideoMetadataModel
             {
                 FrameRate = 1000
             });
 
             var playbackToken = videoPlayer.Load(video);
-            Assert.ThrowsAsync<ArgumentException>(() => videoPlayer.PlayAsync(video, "anytokenvalue"));
+            Assert.ThrowsAsync<ArgumentException>(() => videoPlayer.Play(video));
         }
 
         private Video DummyVideo(VideoMetadataModel model, List<VideoFrameModel> videoFrames = null)

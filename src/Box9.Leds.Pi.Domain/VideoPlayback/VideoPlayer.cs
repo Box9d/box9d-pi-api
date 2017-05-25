@@ -16,7 +16,6 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
     public class VideoPlayer : IVideoPlayer
     {
         private readonly IPlaybackServiceFactory playbackServiceFactory;
-        private readonly IVideoPlayerMonitor videoPlayerMonitor;
         private readonly IDispatcher dispatcher;
         private readonly ILog log;
         private readonly WebSocketApiClient websocketClient;
@@ -24,12 +23,10 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
         private KeyValuePair<string, CancellationTokenSource> cancellationTokenPair;
 
         public VideoPlayer(IPlaybackServiceFactory playbackServiceFactory,
-            IVideoPlayerMonitor videoPlayerMonitor,
             IDispatcher dispatcher,
             ILog log)
         {
             this.playbackServiceFactory = playbackServiceFactory;
-            this.videoPlayerMonitor = videoPlayerMonitor;
             this.dispatcher = dispatcher;
             this.log = log;
             this.websocketClient = new WebSocketApiClient(new Uri("http://localhost:8003"));
@@ -40,44 +37,19 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
             var frames = dispatcher.Dispatch(video.DispatchGetFramesForVideo());
             websocketClient.Load(new LoadRequest { Frames = frames.Select(f => f.BinaryData.Select(d => (int)d).ToArray()).ToArray() }).Wait();
 
-            var cancellationTokenSource = new CancellationTokenSource();
-            var playbackToken = ShortGuid.NewGuid().ToString();
-            cancellationTokenPair = new KeyValuePair<string, CancellationTokenSource>(
-                playbackToken,
-                cancellationTokenSource);
-
-            return new VideoPlaybackToken(playbackToken);
+            return new VideoPlaybackToken("depricated");
         }
 
-        public async Task PlayAsync(Video video, string playbackToken)
-        {
-            if (cancellationTokenPair.Key != playbackToken)
-            {
-                throw new ArgumentException("Playback token not recognized");
-            }
-
-            await Task.Run(() => Play(video), cancellationTokenPair.Value.Token);
-        }
-
-        public void Stop(string playbackToken)
-        {
-            if (cancellationTokenPair.Key != playbackToken)
-            {
-                throw new ArgumentException("Playback token not recognized");
-            }
-
-            cancellationTokenPair.Value.Cancel();
-
-            using (var playback = playbackServiceFactory.GetPlaybackService())
-            {
-                playback.Blackout();
-                videoPlayerMonitor.PlaybackFinished();
-            }
-        }
-
-        internal async Task Play(Video video)
+        public async Task Play(Video video)
         {
             await websocketClient.Play(video.FrameRate);
+        }
+
+        public async Task Stop()
+        {
+            cancellationTokenPair.Value.Cancel();
+
+            await websocketClient.Stop();
         }
 
         internal int CalculateFramePosition(Video video, long elapsedMilliseconds)

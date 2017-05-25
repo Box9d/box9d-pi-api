@@ -6,8 +6,8 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
     {
         VideoPlaybackToken Load(Video video);
 
-        Task PlayAsync(Video video, string playbackToken);
+        Task Play(Video video);
 
-        void Stop(string playbackToken);
+        Task Stop();
     }
 }

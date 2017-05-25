@@ -46,6 +46,11 @@ namespace Box9.Leds.WebSocket.ApiClient
             await this.Post("api/play", request);
         }
 
+        public async Task Stop()
+        {
+            await this.Post("apl/stop", new { });
+        }
+
         internal async Task<TResponse> Get<TResponse>(string requestUri)
         {
             var response = await client.GetAsync(requestUri);

@@ -18,7 +18,6 @@ namespace Box9.Leds.Pi.Domain
             builder.RegisterType<VideoPlayer>().As<IVideoPlayer>()
                 .SingleInstance(); // Persist Video play, stop etc functionality across API requests
             builder.RegisterType<Log>().As<ILog>().SingleInstance();
-            builder.RegisterType<VideoPlayerMonitor>().As<IVideoPlayerMonitor>();
             builder.RegisterType<Dispatcher>().As<IDispatcher>();
 
             builder.RegisterModule(new DataAccessAutofacModule());
