@@ -106,7 +106,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VideoPlayerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
