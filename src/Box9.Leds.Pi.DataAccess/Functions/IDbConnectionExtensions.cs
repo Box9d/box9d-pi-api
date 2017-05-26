@@ -18,7 +18,7 @@ namespace Box9.Leds.Pi.DataAccess.Functions
             return existingItems
                 .Select(t => (int)((dynamic)t).Id)
                 .OrderByDescending(t => t)
-                .First();
+                .First() + 1;
         }
     }
 }
