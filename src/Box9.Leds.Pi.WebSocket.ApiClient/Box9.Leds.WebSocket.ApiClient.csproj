@@ -74,6 +74,7 @@
     <Compile Include="GetFramesResult.cs" />
     <Compile Include="IsWebsocketConnectionOpenResult.cs" />
     <Compile Include="LoadRequest.cs" />
+    <Compile Include="StopRequest.cs" />
     <Compile Include="WebSocketApiClient.cs" />
     <Compile Include="PlayRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

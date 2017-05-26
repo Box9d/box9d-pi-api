@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Box9.Leds.WebSocket.ApiClient
@@ -48,7 +49,7 @@ namespace Box9.Leds.WebSocket.ApiClient
 
         public async Task Stop()
         {
-            await this.Post("api/stop", new { });
+            await this.Post("api/stop", new StopRequest());
         }
 
         internal async Task<TResponse> Get<TResponse>(string requestUri)
@@ -59,9 +60,11 @@ namespace Box9.Leds.WebSocket.ApiClient
             return JsonConvert.DeserializeObject<TResponse>(result);
         }
 
-        internal async Task Post<TRequest>(string requestUri, TRequest request)
+        internal async Task Post<TRequest>(string requestUri, TRequest request, CancellationToken? cancellationToken = null)
         {
-            var response = await client.PostAsJsonAsync(requestUri, request);
+            var response = cancellationToken.HasValue 
+                ? await client.PostAsJsonAsync(requestUri, request, cancellationToken.Value)
+                : await client.PostAsJsonAsync(requestUri, request);
 
             if (response.StatusCode != System.Net.HttpStatusCode.OK && response.StatusCode != System.Net.HttpStatusCode.Created)
             {
