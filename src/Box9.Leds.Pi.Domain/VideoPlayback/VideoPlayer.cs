@@ -20,8 +20,6 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
         private readonly ILog log;
         private readonly WebSocketApiClient websocketClient;
 
-        private KeyValuePair<string, CancellationTokenSource> cancellationTokenPair;
-
         public VideoPlayer(IPlaybackServiceFactory playbackServiceFactory,
             IDispatcher dispatcher,
             ILog log)
@@ -47,8 +45,6 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
 
         public async Task Stop()
         {
-            cancellationTokenPair.Value.Cancel();
-
             await websocketClient.Stop();
         }
 
