@@ -15,6 +15,8 @@ namespace Box9.Leds.Pi.Api
 
         public HttpStatusCode StatusCode { get; private set; }
 
+        public long ResponseTime { get; set; }
+
         private GlobalJsonResult(bool successful, T result, string errorMessage, string stackTrace, HttpStatusCode statusCode)
         {
             Successful = successful;
