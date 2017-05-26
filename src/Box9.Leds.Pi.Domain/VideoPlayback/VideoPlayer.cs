@@ -38,9 +38,9 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
             return new VideoPlaybackToken("depricated");
         }
 
-        public async Task Play(Video video)
+        public async Task Play(DateTime? playAt, Video video)
         {
-            await websocketClient.Play(video.FrameRate);
+            await websocketClient.Play(playAt, video.FrameRate);
         }
 
         public async Task Stop()

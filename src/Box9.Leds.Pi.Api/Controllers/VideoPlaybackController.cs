@@ -33,15 +33,12 @@ namespace Box9.Leds.Pi.Api.Controllers
         [ActionName("Load")]
         
         [HttpGet]
-        public GlobalJsonResult<LoadVideoPlaybackResult> Load(int videoId, [FromBody]LoadVideoPlaybackRequest request)
+        public GlobalJsonResult<EmptyResult> Load(int videoId, [FromBody]LoadVideoPlaybackRequest request)
         {
             var video = videoComponentService.GetById(videoId);
-            var videoPlaybackToken = videoPlayer.Load(video);
+            videoPlayer.Load(video);
 
-            var result = new LoadVideoPlaybackResult();
-            result.Populate(videoPlaybackToken);
-
-            return GlobalJsonResult<LoadVideoPlaybackResult>.Success(HttpStatusCode.OK, result);
+            return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.OK);
         }
 
         [ActionName("Play")]
@@ -49,7 +46,7 @@ namespace Box9.Leds.Pi.Api.Controllers
         public GlobalJsonResult<EmptyResult> Play(int videoId, [FromBody]PlayVideoRequest request)
         {
             var video = videoComponentService.GetById(videoId);
-            videoPlayer.Play(video);
+            videoPlayer.Play(request.PlayAt, video);
 
             return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.OK);
         }

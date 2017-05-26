@@ -1,12 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Box9.Leds.Pi.Domain.VideoPlayback
 {
     public interface IVideoPlayer
     {
-        VideoPlaybackToken Load(Video video);
+        void Load(Video video);
 
-        Task Play(Video video);
+        Task Play(DateTime? playAt, Video video);
 
         Task Stop();
     }
