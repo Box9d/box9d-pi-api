@@ -119,7 +119,6 @@
     <Compile Include="VideoPlayback\IPlaybackService.cs" />
     <Compile Include="VideoPlayback\IPlaybackServiceFactory.cs" />
     <Compile Include="VideoPlayback\IVideoPlayer.cs" />
-    <Compile Include="VideoPlayback\VideoPlaybackToken.cs" />
     <Compile Include="VideoPlayback\VideoPlayer.cs" />
     <Compile Include="VideoPlayback\PlaybackServiceFactory.cs" />
     <Compile Include="Videos\IVideoComponentService.cs" />

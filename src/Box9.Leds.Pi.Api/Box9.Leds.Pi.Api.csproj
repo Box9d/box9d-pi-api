@@ -182,7 +182,6 @@
     <Compile Include="ApiRequests\StopVideoRequest.cs" />
     <Compile Include="ApiRequests\VideoMetadataCreateRequest.cs" />
     <Compile Include="ApiRequests\VideoMetadataPutRequest.cs" />
-    <Compile Include="ApiResults\LoadVideoPlaybackResult.cs" />
     <Compile Include="ApiResults\VideoMetadataResult.cs" />
     <Compile Include="Autofac\ApiModule.cs" />
     <Compile Include="Controllers\Metadata.cs" />

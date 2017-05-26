@@ -30,12 +30,10 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
             this.websocketClient = new WebSocketApiClient(new Uri("http://localhost:8003"));
         }
 
-        public VideoPlaybackToken Load(Video video)
+        public void Load(Video video)
         {
             var frames = dispatcher.Dispatch(video.DispatchGetFramesForVideo());
             websocketClient.Load(new LoadRequest { Frames = frames.Select(f => f.BinaryData.Select(d => (int)d).ToArray()).ToArray() }).Wait();
-
-            return new VideoPlaybackToken("depricated");
         }
 
         public async Task Play(DateTime? playAt, Video video)
