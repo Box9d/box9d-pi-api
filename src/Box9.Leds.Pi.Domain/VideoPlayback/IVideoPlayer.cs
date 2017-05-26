@@ -7,7 +7,7 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
     {
         void Load(Video video);
 
-        Task Play(DateTime? playAt, Video video);
+        Task Play(string timeReferenceUrl, DateTime? playAt, Video video);
 
         Task Stop();
     }

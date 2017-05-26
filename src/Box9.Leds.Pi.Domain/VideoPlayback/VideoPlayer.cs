@@ -36,9 +36,9 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
             websocketClient.Load(new LoadRequest { Frames = frames.Select(f => f.BinaryData.Select(d => (int)d).ToArray()).ToArray() }).Wait();
         }
 
-        public async Task Play(DateTime? playAt, Video video)
+        public async Task Play(string timeReferenceUrl, DateTime? playAt, Video video)
         {
-            await websocketClient.Play(playAt, video.FrameRate);
+            await websocketClient.Play(timeReferenceUrl, playAt, video.FrameRate);
         }
 
         public async Task Stop()

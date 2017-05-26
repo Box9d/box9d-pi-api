@@ -46,7 +46,7 @@ namespace Box9.Leds.Pi.Api.Controllers
         public GlobalJsonResult<EmptyResult> Play(int videoId, [FromBody]PlayVideoRequest request)
         {
             var video = videoComponentService.GetById(videoId);
-            videoPlayer.Play(request.PlayAt, video);
+            videoPlayer.Play(request.TimeReferenceUrl, request.PlayAt, video);
 
             return GlobalJsonResult<EmptyResult>.Success(HttpStatusCode.OK);
         }

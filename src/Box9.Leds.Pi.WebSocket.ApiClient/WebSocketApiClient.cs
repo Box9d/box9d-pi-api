@@ -39,11 +39,13 @@ namespace Box9.Leds.WebSocket.ApiClient
             return await this.Get<IsWebsocketConnectionOpenResult>("api/checkConnection");
         }
 
-        public async Task Play(DateTime? playAt, double frameRate)
+        public async Task Play(string timeReferenceUrl, DateTime? playAt, double frameRate)
         {
-            var request = new PlayRequest(playAt)
+            var request = new PlayRequest
             {
-                FrameRate = frameRate
+                FrameRate = frameRate,
+                TimeReferenceUrl = timeReferenceUrl,
+                PlayAt = playAt
             };
 
             await this.Post("api/play", request);
