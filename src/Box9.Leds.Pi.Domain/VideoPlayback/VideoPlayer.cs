@@ -10,6 +10,7 @@ using Box9.Leds.Pi.Domain.VideoFrames;
 using Box9.Leds.Pi.Domain.Videos;
 using Box9.Leds.Pi.Domain.Logging;
 using Box9.Leds.WebSocket.ApiClient;
+using System.IO;
 
 namespace Box9.Leds.Pi.Domain.VideoPlayback
 {
@@ -32,13 +33,18 @@ namespace Box9.Leds.Pi.Domain.VideoPlayback
 
         public void Load(Video video)
         {
-            var frames = dispatcher.Dispatch(video.DispatchGetFramesForVideo());
-            websocketClient.Load(new LoadRequest { Frames = frames.Select(f => f.BinaryData.Select(d => (int)d).ToArray()).ToArray() }).Wait();
+            var sqliteDatabasePath = Path.Combine(Directory.GetCurrentDirectory(), "box9database.sqlite");
+            websocketClient.Load(new LoadRequest
+            {
+                DatabasePath = sqliteDatabasePath,
+                FrameRate = video.FrameRate,
+                VideoId = video.Id
+            }).Wait();
         }
 
-        public async Task Play(string timeReferenceUrl, DateTime? playAt, Video video)
+        public async Task Play(string timeReferenceUrl, DateTime? playAt)
         {
-            await websocketClient.Play(timeReferenceUrl, playAt, video.FrameRate);
+            await websocketClient.Play(timeReferenceUrl, playAt);
         }
 
         public async Task Stop()
