@@ -13,8 +13,6 @@ namespace Box9.Leds.Pi.Domain
 {
     public class Video : IInitializable<VideoInitializer>
     {
-        private IEnumerable<VideoFrame> frames;
-
         private readonly IDispatcher dispatcher;
         internal VideoMetadataModel Model;
 
@@ -24,15 +22,11 @@ namespace Box9.Leds.Pi.Domain
 
         public double FrameRate { get { return Model.FrameRate; } }
 
-        public int TotalFrames { get { return frames.Count(); } }
-
         internal Video(VideoMetadataModel videoMetadataModel, IDispatcher dispatcher)
         {
             Model = videoMetadataModel;
 
             this.dispatcher = dispatcher;
-
-            frames = dispatcher.Dispatch(this.DispatchGetFramesForVideo());
         }
 
         public void Initialize(int id, VideoInitializer initializer)
@@ -66,25 +60,12 @@ namespace Box9.Leds.Pi.Domain
 
         public void AddFrames(IEnumerable<VideoFrame> framesToAdd)
         {
-            foreach (var videoFrame in framesToAdd)
-            {
-                foreach (var occupiedPosition in frames.Select(fr => fr.Position))
-                {
-                    if (videoFrame.Position == occupiedPosition)
-                    {
-                        throw new ArgumentException(string.Format("Frame position {0} is already occupied for video", videoFrame.Position));
-                    }
-                }
-            }
-
             dispatcher.Dispatch(this.DispatchAddFrames(framesToAdd));
-            frames = dispatcher.Dispatch(this.DispatchGetFramesForVideo()); // Refresh frames after adding
         }
 
         public void ClearFrames()
         {
             dispatcher.Dispatch(this.DispatchClearFrames());
-            frames = dispatcher.Dispatch(this.DispatchGetFramesForVideo()); // Refresh frames after clearing
         }
     }
 }

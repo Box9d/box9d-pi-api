@@ -20,14 +20,9 @@ namespace Box9.Leds.Pi.DataAccess.Functions
             }
         }
 
-        public static IEnumerable<VideoFrameModel> GetVideoFramesByVideoId(this IDbConnection conn, int videoId)
-        {
-            return conn.Query<VideoFrameModel>("SELECT * FROM VideoFrame WHERE VideoId = @videoId", new { videoId });
-        }
-
         public static void DeleteVideoFramesByVideoId(this IDbConnection conn, int videoId)
         {
-            conn.Execute("DELETE FROM VideoFrame WHERE VideoId = @videoId", new { videoId });
+            conn.Execute("DELETE FROM VideoFrame WHERE videoid = @videoId", new { videoId });
         }
     }
 }

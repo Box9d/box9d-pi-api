@@ -39,15 +39,6 @@ namespace Box9.Leds.Pi.Domain.Videos
             };
         }
 
-        internal static Func<IDbConnection, IEnumerable<VideoFrame>> DispatchGetFramesForVideo(this Video video)
-        {
-            return (IDbConnection conn) =>
-            {
-                return conn.GetVideoFramesByVideoId(video.Id)
-                    .Select(f => new VideoFrame(f));
-            };                    
-        }
-
         internal static Action<IDbConnection> DispatchClearFrames(this Video video)
         {
             return (IDbConnection conn) =>
