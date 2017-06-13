@@ -5,13 +5,10 @@ namespace Box9.Leds.WebSocket.ApiClient
 {
     public class PlayRequest
     {
-        [JsonProperty("frameRate")]
-        public double FrameRate { get; set; }
-
-        [JsonProperty("playAt")]
+        [JsonProperty("play_at")]
         public DateTime? PlayAt { get; set; }
 
-        [JsonProperty("timeReferenceUrl")]
+        [JsonProperty("time_reference_url")]
         public string TimeReferenceUrl { get; set; }
     }
 }
