@@ -187,6 +187,7 @@
     <Compile Include="Controllers\Metadata.cs" />
     <Compile Include="Controllers\VideoFramesController.cs" />
     <Compile Include="Controllers\VideoMetadataController.cs" />
+    <Compile Include="Controllers\VideoPlaybackController.cs" />
     <Compile Include="EmptyResult.cs" />
     <Compile Include="FileServer.cs" />
     <Compile Include="Filters\GlobalActionFilter.cs" />

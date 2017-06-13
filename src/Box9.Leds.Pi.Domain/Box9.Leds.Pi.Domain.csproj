@@ -113,6 +113,7 @@
     <Compile Include="VideoFrames\IVideoFrameComponentService.cs" />
     <Compile Include="VideoFrames\VideoFrame.cs" />
     <Compile Include="VideoFrames\VideoFrameComponentService.cs" />
+    <Compile Include="VideoPlayback\VideoPlayer.cs" />
     <Compile Include="Videos\IVideoComponentService.cs" />
     <Compile Include="Videos\Video.cs" />
     <Compile Include="Videos\VideoActions.cs" />
